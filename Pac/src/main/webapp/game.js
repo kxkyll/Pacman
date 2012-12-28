@@ -11,24 +11,12 @@ window.requestAnimFrame = (function(){
 })();
 
 
-$(document).ready(function(){
-    console.log("document ready");
-    pacmanGame.init();
-    $(document).keyup(function(eventInfo) {
-        console.log(eventInfo.which);
-        keyhandler.keyup(eventInfo.which);
-    });
-        
-    $(document).keydown(function(eventInfo) {
-        console.log(eventInfo.which);
-        keyhandler.keydown(eventInfo.which);
-    });
-})
 
 var pacmanGame ={
     ctx: null,
     man: null,
     gameOver: null,
+    
     init: function(){
         console.log("init");
         pacmanGame.ctx = $("#pacman")[0].getContext("2d");
@@ -36,13 +24,31 @@ var pacmanGame ={
         pacmanGame.ctx.fillRect(0,0, 640,480);
         pacmanGame.man = new Pacman (120, 100, 20);
         pacmanGame.man.draw(pacmanGame.ctx);
-        pacmanGame.run();
+    //pacmanGame.run();
     },
+    
     run: function(){
-        //console.log("run");
+        console.log("run");
         pacmanGame.man.move(keyhandler.getMovement());
         pacmanGame.man.draw(pacmanGame.ctx);
         requestAnimFrame(pacmanGame.run());
-        //setTimeout(pacmanGame.run(),1000);
+    //setTimeout(pacmanGame.run(),1000);
     }
 };
+
+$(document).ready(function(){
+    console.log("document ready");
+    pacmanGame.init();
+    $(document).keyup(function(eventInfo) {
+        console.log("keyup "+eventInfo.which);
+        keyhandler.keyup(eventInfo.which);
+    //        pacmanGame.man.move(keyhandler.getMovement());
+    //        pacmanGame.man.draw(pacmanGame.ctx);
+    });
+        
+    $(document).keydown(function(eventInfo) {
+        console.log("keydown "+eventInfo.which);
+        keyhandler.keydown(eventInfo.which);
+    });
+    pacmanGame.run();
+})

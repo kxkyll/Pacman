@@ -23,22 +23,29 @@ Pacman.prototype.getR = function(){
 //}
 
 Pacman.prototype.move = function(xAndy){
+    var step = 1;
     var x=xAndy[0];   
     var y=xAndy[1];
+    console.log("x: "+x);
+    console.log("y: "+y);
     if (x === 0 && y === -1){ //up
-        this.y -= y;
+        console.log("up");
+        this.y -= step;
         return;
     }
     if (x === 0 && y === 1){ //down
-        this.y += y;
+        console.log("down");
+        this.y += step;
         return;
     }
     if (x === -1 && y === 0){ //left
-        this.x -= x; 
+        console.log("left");
+        this.x -= step; 
         return;
     }
     if (x === 1 && y === 0){ //right
-        this.x += x;
+        console.log("right");
+        this.x += step;
         return;
     }
     
