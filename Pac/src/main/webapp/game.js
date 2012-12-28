@@ -3,6 +3,6 @@ $(document).ready(function(){
     var context = $("#pacman")[0].getContext("2d");
     context.fillStyle="rgb(105,105,105)";
     context.fillRect(0,0, 640,480);
-    var pac = new Pacman (10, 50, 40);
+    var pac = new Pacman (120, 100, 20);
     pac.draw(context);
 })
