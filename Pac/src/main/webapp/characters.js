@@ -23,7 +23,7 @@ Pacman.prototype.getR = function(){
 //}
 
 Pacman.prototype.move = function(xAndy){
-    var step = 1;
+    var step = 10;
     var x=xAndy[0];   
     var y=xAndy[1];
     console.log("x: "+x);
