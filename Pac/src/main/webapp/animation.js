@@ -7,6 +7,10 @@ function Animation (image, row, width, height){
     this.currentY = row;
 }
 
+Animation.prototype.setDirection = function (row){
+    this.currentY = row;
+}
+
 Animation.prototype.next = function (){
     console.log("currentX: "+this.currentX);
     this.currentX += this.frameWidth;

@@ -3,7 +3,8 @@ function Pacman (x,y,r){
     this.y=y;
     this.r=r;
     this.colour = "rgb(255,255,0)";
-    this.animation = new Animation ($("#pacmansprite")[0],0,32,40);
+    //this.animation = new Animation ($("#pacmansprite")[0],0,32,40);
+    this.animation = new Animation ($("#omasprite")[0],0,34,31);
 //console.log("pacman luotu");
 }
 
@@ -33,24 +34,28 @@ Pacman.prototype.move = function(xAndy){
     if (x === 0 && y === -1){ //up
         console.log("up");
         this.y -= step;
+        this.animation.setDirection(62);
         this.animation.next();
         return;
     }
     if (x === 0 && y === 1){ //down
         console.log("down");
         this.y += step;
+        this.animation.setDirection(93);
         this.animation.next();
         return;
     }
     if (x === -1 && y === 0){ //left
         console.log("left");
         this.x -= step; 
+        this.animation.setDirection(31);
         this.animation.next();
         return;
     }
     if (x === 1 && y === 0){ //right
         console.log("right");
         this.x += step;
+        this.animation.setDirection(0);
         this.animation.next();
         return;
     }

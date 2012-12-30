@@ -27,7 +27,8 @@ var pacmanGame ={
     },
     draw: function(){
         pacmanGame.ctx.clearRect(0,0,640,480);
-        pacmanGame.ctx.fillStyle="rgb(105,105,105)";
+        //pacmanGame.ctx.fillStyle="rgb(105,105,105)";
+        pacmanGame.ctx.fillStyle="rgb(195,195,195)";
         pacmanGame.ctx.fillRect(0,0, 640,480);
         //pacmanGame.man.animate();
         pacmanGame.man.draw(pacmanGame.ctx);
@@ -59,7 +60,7 @@ $(document).ready(function(){
     setInterval(function() {
         pacmanGame.run();
         
-    }, 100)
+    }, 200)
     
     
 })
