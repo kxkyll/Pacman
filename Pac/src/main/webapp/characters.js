@@ -87,4 +87,20 @@ Pacman.prototype.draw = function(context){
 
 }
 
+function Ghost (x,y){
+    this.x=x;
+    this.y=y;
+    this.animation = new Animation ($("#ghostsprite")[0],0,40,38);
 
+}
+
+Ghost.prototype.draw = function(context) {
+    this.animation.draw(context, this.x, this.y);
+}
+
+Ghost.prototype.animate = function(){
+    this.animation.next();
+}
+Ghost.prototype.move = function (){
+    
+}
