@@ -31,18 +31,31 @@ var keyhandler = (function() {
     }
     function getMovement() {
         var movement = [0, 0];       
-        if(up()) {
-            return[0,-1];
+          if(up()) {
+            movement[1] = -1;
         }
         if(down()) {
-           return [0,1];
+           movement[1] = 1;
         }
         if(left()) {
-            return [-1,0]; 
+            movement[0] = -1;
         }
         if(right()) {
-            return [1,0];
+            movement[0] = 1;
         }
+// own working        
+//        if(up()) {
+//            return[0,-1];
+//        }
+//        if(down()) {
+//           return [0,1];
+//        }
+//        if(left()) {
+//            return [-1,0]; 
+//        }
+//        if(right()) {
+//            return [1,0];
+//        }
         return movement;
     }
     

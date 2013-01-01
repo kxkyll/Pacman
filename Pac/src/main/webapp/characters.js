@@ -1,17 +1,21 @@
-var direction = {
+var pacmanDirection = {
     RIGHT: 0,
     LEFT: 37,
     UP: 74,
     DOWN:107
 }
 
+var ghostDirection = {
+    VERTICAL:0,
+    HORIZONTAL: 38
+}
 
-function Pacman (x,y){
+
+function Pacman (x,y, context){
     this.x=x;
     this.y=y;
-    //this.animation = new Animation ($("#omasprite")[0],0,34,31);
+    this.context = context;
     this.animation = new Animation ($("#pacsprite")[0],0,41,37);
-//console.log("pacman luotu");
 }
 
 Pacman.prototype.getX = function(){
@@ -20,57 +24,55 @@ Pacman.prototype.getX = function(){
 Pacman.prototype.getY = function(){
     return this.y;
 }
-Pacman.prototype.getR = function(){
-    return this.r;
-}
-//Pacman.prototype.setX = function(x){
-//    this.x = x;
-//}
-//Pacman.prototype.setY = function(y){
-//    this.y = y;
-//}
 
-Pacman.prototype.move = function(xAndy){
+Pacman.prototype.clear = function(){
+    this.context.clearRect(this.x,this.y,41,37);
+    this.context.fillStyle="rgb(195,195,195)";
+    this.context.fillRect(this.x,this.y, 41,37);
+}
+
+Pacman.prototype.move = function(movement){
+    this.clear();
     var step = 10;
-    var x=xAndy[0];   
-    var y=xAndy[1];
+    this.x += (movement[0] * step);
+    this.y += (movement[1] * step);
+    
+    if (movement[1] == -1){ // up
+        //console.log("up");
+        this.animation.setDirection(pacmanDirection.UP);
+    } 
+    
+    if (movement[1] == 1){ // down
+        //console.log("down");
+        this.animation.setDirection(pacmanDirection.DOWN);
+    }
+
+    if (movement[0] == -1){ // left
+        //console.log("left");
+        this.animation.setDirection(pacmanDirection.LEFT);
+    }
+    
+    if (movement[0] == 1){ // right
+        //console.log("right");
+        this.animation.setDirection(pacmanDirection.RIGHT);
+    }
+    
+}
+
+Pacman.prototype.collision = function (ghost) {
+    console.log("pac x: "+ this.x +" pac y: " +this.y);
+    console.log("ghost x: "+ ghost.x +" ghost y: " +ghost.y);
+    var x = Math.abs(this.x - ghost.x);
     console.log("x: "+x);
+    var y = Math.abs(this.y - ghost.y);
     console.log("y: "+y);
-    
-    if (x === 0 && y === -1){ //up
-        console.log("up");
-        this.y -= step;
-        //this.animation.setDirection(62);
-        this.animation.setDirection(direction.UP);
-        //this.animation.next();
-        return;
+    var dist = Math.sqrt(x*x+y*y);
+    console.log("dist: "+dist);
+    if (dist < 25) {
+        console.log("COLLISION");
+        return true;
     }
-    if (x === 0 && y === 1){ //down
-        console.log("down");
-        this.y += step;
-        //this.animation.setDirection(93);
-        this.animation.setDirection(direction.DOWN);
-        //this.animation.next();
-        return;
-    }
-    if (x === -1 && y === 0){ //left
-        console.log("left");
-        this.x -= step; 
-        //this.animation.setDirection(31);
-        this.animation.setDirection(direction.LEFT);
-        //this.animation.next();
-        return;
-    }
-    if (x === 1 && y === 0){ //right
-        console.log("right");
-        this.x += step;
-        this.animation.setDirection(direction.RIGHT);
-        //this.animation.next();
-        return;
-    }
-    
-    
-    
+    return false;
 }
 
 Pacman.prototype.animate = function(){
@@ -82,25 +84,22 @@ Pacman.prototype.changeColour = function(colour){
     this.colour = colour;
 }
 
-Pacman.prototype.draw = function(context){
-   
+Pacman.prototype.draw = function(context){  
     this.animation.draw(context, this.x, this.y);
-//    //console.log("pacmania piirtämässä");    
-//    context.beginPath();
-//    context.arc(this.x, this.y, this.r, 0, 2* Math.PI, false);
-//    context.fillStyle=this.colour;
-//    context.fill();
-//    //context.lineWidth =2;
-//    //context.strokeStyle = '#003300';
-//    context.stroke();
+}
+
+function Ghost (x,y, context){
+    this.x=x;
+    this.y=y;
+    this.context = context;
+    this.animation = new Animation ($("#ghostsprite")[0],0,40,38);
 
 }
 
-function Ghost (x,y){
-    this.x=x;
-    this.y=y;
-    this.animation = new Animation ($("#ghostsprite")[0],0,40,38);
-
+Ghost.prototype.clear = function(){
+    this.context.clearRect(this.x,this.y,40,38);
+    this.context.fillStyle="rgb(195,195,195)";
+    this.context.fillRect(this.x,this.y, 40,38);
 }
 
 Ghost.prototype.draw = function(context) {
@@ -111,5 +110,16 @@ Ghost.prototype.animate = function(){
     this.animation.next();
 }
 Ghost.prototype.move = function (){
-    
+    this.clear();
+    var step = 8;
+    if (this.x < 560) {
+        this.x += step;
+        this.animation.setDirection(ghostDirection.HORIZONTAL);
+    }else if (this.y < 390){
+        this.y += step;
+        this.animation.setDirection(ghostDirection.VERTICAL);
+    }else {
+        this.x = 40;
+        this.y = 40;
+    }
 }

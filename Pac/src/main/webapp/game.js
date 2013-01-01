@@ -21,8 +21,9 @@ var pacmanGame ={
     init: function(){
         //console.log("init");
         pacmanGame.ctx = $("#pacman")[0].getContext("2d");
-        pacmanGame.man = new Pacman (120, 100);
-        pacmanGame.ghost = new Ghost (200, 150);
+        pacmanGame.man = new Pacman (120, 100, pacmanGame.ctx);
+        pacmanGame.ghost = new Ghost (200, 150, pacmanGame.ctx);
+        pacmanGame.draw();
     },
     draw: function(){
         pacmanGame.ctx.clearRect(0,0,640,480);
@@ -47,19 +48,38 @@ var pacmanGame ={
         pacmanGame.ctx.fillRect(0,0,40,480);
         
         
+//        pacmanGame.man.animate();
+//        pacmanGame.man.draw(pacmanGame.ctx);
+//        pacmanGame.ghost.animate(); 
+//        pacmanGame.ghost.draw(pacmanGame.ctx);
+        
+    },
+    render: function(){
         pacmanGame.man.animate();
         pacmanGame.man.draw(pacmanGame.ctx);
         pacmanGame.ghost.animate(); 
         pacmanGame.ghost.draw(pacmanGame.ctx);
         
     },
-    
     run: function(){
         //console.log("run");
+        if (pacmanGame.gameOver){
+            pacmanGame.end();
+        }
         pacmanGame.man.move(keyhandler.getMovement());
-        pacmanGame.draw();
+        if (pacmanGame.man.collision(pacmanGame.ghost)){
+            pacmanGame.gameOver = true;
+            pacmanGame.end();
+        }
+            
+        pacmanGame.ghost.move();
+        pacmanGame.render();
+        //pacmanGame.draw();
         //requestAnimFrame(pacmanGame.run());
         
+    },
+    end: function(){
+      pacmanGame.ctx.fillText("Game over",240,320);  
     }
 };
 
@@ -78,7 +98,10 @@ $(document).ready(function(){
     });
     
     setInterval(function() {
-        pacmanGame.run();
+        if (!pacmanGame.gameOver){
+            pacmanGame.run();
+        }
+        
         
     }, 200) //1000/20
     
