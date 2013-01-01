@@ -21,14 +21,32 @@ var pacmanGame ={
     init: function(){
         //console.log("init");
         pacmanGame.ctx = $("#pacman")[0].getContext("2d");
-        pacmanGame.man = new Pacman (120, 100, 20);
-        pacmanGame.ghost = new Ghost (200,150);
+        pacmanGame.man = new Pacman (120, 100);
+        pacmanGame.ghost = new Ghost (200, 150);
     },
     draw: function(){
         pacmanGame.ctx.clearRect(0,0,640,480);
 
         pacmanGame.ctx.fillStyle="rgb(195,195,195)";
         pacmanGame.ctx.fillRect(0,0, 640,480);
+        
+        //uppder border
+        pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+        pacmanGame.ctx.fillRect(0,0, 640,40);
+        
+        //lower border
+        pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+        pacmanGame.ctx.fillRect(0,440, 640,480);
+        
+        //right border
+        pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+        pacmanGame.ctx.fillRect(600,0, 600,480);
+        
+        //left border
+        pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+        pacmanGame.ctx.fillRect(0,0,40,480);
+        
+        
         pacmanGame.man.animate();
         pacmanGame.man.draw(pacmanGame.ctx);
         pacmanGame.ghost.animate(); 
@@ -62,7 +80,7 @@ $(document).ready(function(){
     setInterval(function() {
         pacmanGame.run();
         
-    }, 200)
+    }, 200) //1000/20
     
     
 })
