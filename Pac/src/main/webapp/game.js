@@ -16,42 +16,54 @@ var pacmanGame ={
     ctx: null,
     man: null,
     ghost: null,
+    field: null,
     gameOver: null,
     
     init: function(){
         //console.log("init");
         pacmanGame.ctx = $("#pacman")[0].getContext("2d");
-        pacmanGame.man = new Pacman (120, 100, pacmanGame.ctx);
+        pacmanGame.man = new Pacman (120, 200, pacmanGame.ctx);
         pacmanGame.ghost = new Ghost (200, 150, pacmanGame.ctx);
+        //pacmanGame.field = new Field(pacmanGame.ctx);
         pacmanGame.draw();
     },
     draw: function(){
         pacmanGame.ctx.clearRect(0,0,640,480);
 
         pacmanGame.ctx.fillStyle="rgb(195,195,195)";
+        // fillRect parameters x,y, width, height
         pacmanGame.ctx.fillRect(0,0, 640,480);
+        //pacmanGame.field.draw();
         
         //uppder border
         pacmanGame.ctx.fillStyle="rgb(25,25,112)";
         pacmanGame.ctx.fillRect(0,0, 640,40);
         
         //lower border
-        pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+        //pacmanGame.ctx.fillStyle="rgb(25,25,112)";
         pacmanGame.ctx.fillRect(0,440, 640,480);
         
         //right border
-        pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+        //pacmanGame.ctx.fillStyle="rgb(25,25,112)";
         pacmanGame.ctx.fillRect(600,0, 600,480);
         
         //left border
-        pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+        //pacmanGame.ctx.fillStyle="rgb(25,25,112)";
         pacmanGame.ctx.fillRect(0,0,40,480);
         
+        //upper left corner
+        pacmanGame.ctx.fillRect(80,80,40,100);
+        pacmanGame.ctx.fillRect(80,80,120,40);
         
-//        pacmanGame.man.animate();
-//        pacmanGame.man.draw(pacmanGame.ctx);
-//        pacmanGame.ghost.animate(); 
-//        pacmanGame.ghost.draw(pacmanGame.ctx);
+        //lower right corner
+        pacmanGame.ctx.fillRect(390,350,120,40);
+        pacmanGame.ctx.fillRect(510,290,40,100);
+        
+        
+    //        pacmanGame.man.animate();
+    //        pacmanGame.man.draw(pacmanGame.ctx);
+    //        pacmanGame.ghost.animate(); 
+    //        pacmanGame.ghost.draw(pacmanGame.ctx);
         
     },
     render: function(){
@@ -74,12 +86,15 @@ var pacmanGame ={
             
         pacmanGame.ghost.move();
         pacmanGame.render();
-        //pacmanGame.draw();
-        //requestAnimFrame(pacmanGame.run());
+    //pacmanGame.draw();
+    //requestAnimFrame(pacmanGame.run());
         
     },
     end: function(){
-      pacmanGame.ctx.fillText("Game over",240,320);  
+        
+        pacmanGame.ctx.font="40pt Calibri";
+        pacmanGame.ctx.fillStyle="rgb(255,0,0)";
+        pacmanGame.ctx.fillText("Game over",200,280);  
     }
 };
 

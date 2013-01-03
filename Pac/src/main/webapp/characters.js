@@ -1,13 +1,13 @@
 var pacmanDirection = {
     RIGHT: 0,
-    LEFT: 37,
-    UP: 74,
-    DOWN:107
+    LEFT: 36,
+    UP: 72,
+    DOWN:106
 }
 
 var ghostDirection = {
     VERTICAL:0,
-    HORIZONTAL: 38
+    HORIZONTAL: 36
 }
 
 
@@ -15,7 +15,7 @@ function Pacman (x,y, context){
     this.x=x;
     this.y=y;
     this.context = context;
-    this.animation = new Animation ($("#pacsprite")[0],0,41,37);
+    this.animation = new Animation ($("#pacsprite")[0],0,40,36);
 }
 
 Pacman.prototype.getX = function(){
@@ -26,9 +26,9 @@ Pacman.prototype.getY = function(){
 }
 
 Pacman.prototype.clear = function(){
-    this.context.clearRect(this.x,this.y,41,37);
+    this.context.clearRect(this.x,this.y,40,36);
     this.context.fillStyle="rgb(195,195,195)";
-    this.context.fillRect(this.x,this.y, 41,37);
+    this.context.fillRect(this.x,this.y, 40,36);
 }
 
 Pacman.prototype.move = function(movement){
@@ -92,14 +92,14 @@ function Ghost (x,y, context){
     this.x=x;
     this.y=y;
     this.context = context;
-    this.animation = new Animation ($("#ghostsprite")[0],0,40,38);
+    this.animation = new Animation ($("#ghostsprite")[0],0,40,36);
 
 }
 
 Ghost.prototype.clear = function(){
-    this.context.clearRect(this.x,this.y,40,38);
+    this.context.clearRect(this.x,this.y,40,36);
     this.context.fillStyle="rgb(195,195,195)";
-    this.context.fillRect(this.x,this.y, 40,38);
+    this.context.fillRect(this.x,this.y, 40,36);
 }
 
 Ghost.prototype.draw = function(context) {
@@ -122,4 +122,17 @@ Ghost.prototype.move = function (){
         this.x = 40;
         this.y = 40;
     }
+}
+
+function Field (context){
+    this.context = context;
+    this.image = '<img src="img/omaghost.png">';
+    this.x = 0;
+    this.y = 0;
+    
+}
+//Ei piirrä -> Uncaucht type error
+Field.prototype.draw = function (){
+   
+    this.context.drawImage(this.image, this.x, this.y);
 }
