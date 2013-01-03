@@ -36,18 +36,12 @@ Pacman.prototype.move = function(movement,path){
     var step = 10;
     var newx = this.x + (movement[0] * step);
     var newy = this.y + (movement[1] * step);
-    console.log("newx: "+newx +" newy "+newy);
-    console.log("path: "+path[newy][newx]);
+//    console.log("newx: "+newx +" newy "+newy);
+//    console.log("path: "+path[newy][newx]);
     if (!path[newy][newx]){
-        console.log ("ei voi mennä");
+        //console.log ("Wrong direction");
         return;
     }
-//    //    if (!path[x][y]){
-//    //        console.log("ei voi mennä");
-//    //        //illegal direction
-//    //        return;
-//    //    }
-//    
     this.x += (movement[0] * step);
     this.y += (movement[1] * step);
     

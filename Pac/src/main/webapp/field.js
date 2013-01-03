@@ -116,57 +116,57 @@ function createPath(){
     //vertical row 2
     
     //vertical row 3
-    for (var y3 = 120; y3 < 361; y3++){
+    for (var y3 = 120; y3 < 321; y3++){
         fieldPath[y3][120] = true;
     }
     
     //vertical row 4
-    for (var y4 = 120; y4 < 201; y4++){
+    for (var y4 = 120; y4 < 161; y4++){
         fieldPath[y4][160] = true;
     }
     
-    for (var y42 = 320; y42 < 441; y42++){
+    for (var y42 = 320; y42 < 401; y42++){
         fieldPath[y42][160] = true;
     }
     
     //vertical row 5
-    for (var y5 = 40; y5 < 201; y5++){
+    for (var y5 = 40; y5 < 161; y5++){
         fieldPath[y5][200] = true;
     }
     
     //vertical row 6
     
     //vertical row 7
-    for (var y7 = 120; y7 < 361; y7++){
+    for (var y7 = 120; y7 < 321; y7++){
         fieldPath[y7][280] = true;
     }
     
     //vertical row 8
-    for (var y8 = 40; y8 < 201; y8++){
+    for (var y8 = 40; y8 < 161; y8++){
         fieldPath[y8][320] = true;
     }
     
     //vertical row 9
-    for (var y9 = 120; y9 < 201; y9++){
+    for (var y9 = 120; y9 < 161; y9++){
         fieldPath[y9][360] = true;
     }
     
-    for (var y92 = 320; y92 < 441; y92++){
+    for (var y92 = 320; y92 < 401; y92++){
         fieldPath[y92][360] = true;
     }
     
     //vertical row 10
-    for (var y10 = 120; y10 < 201; y10++){
+    for (var y10 = 120; y10 < 161; y10++){
         fieldPath[y10][400] = true;
     }
     
     //vertical row 11
-    for (var y11 = 120; y11 < 201; y11++){
+    for (var y11 = 120; y11 < 161; y11++){
         fieldPath[y11][440] = true;
     }
     
     //vertical row 12
-    for (var y12 = 120; y12 < 361; y12++){
+    for (var y12 = 120; y12 < 321; y12++){
         fieldPath[y12][480] = true;
     }
     

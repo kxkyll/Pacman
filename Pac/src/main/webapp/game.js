@@ -96,7 +96,9 @@ var pacmanGame ={
         if (pacmanGame.gameOver){
             pacmanGame.end();
         }
+        
         pacmanGame.man.move(keyhandler.getMovement(), pacmanGame.path);
+        
         if (pacmanGame.man.collision(pacmanGame.readGhost)){
             pacmanGame.gameOver = true;
             pacmanGame.end();
