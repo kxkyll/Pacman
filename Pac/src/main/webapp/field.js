@@ -1,6 +1,6 @@
 function createPath(){
     //create array
-    var fieldPath = new Array(10);
+    var fieldPath = new Array(2);
     //make array two dimensional
     for (var k = 0; k < 481; k++) {
         fieldPath[k] = new Array(640);
@@ -66,6 +66,10 @@ function createPath(){
     fieldPath[200][40] = true;
     fieldPath[200][120] = true;
     fieldPath[200][280] = true;
+    for (var x5 = 360; x5 < 401; x5++){
+        fieldPath[200][x5] = true;
+    }
+    
     fieldPath[200][480] = true;
     fieldPath[200][560] = true;
     
@@ -147,7 +151,7 @@ function createPath(){
     }
     
     //vertical row 9
-    for (var y9 = 120; y9 < 161; y9++){
+    for (var y9 = 120; y9 < 241; y9++){
         fieldPath[y9][360] = true;
     }
     
@@ -156,7 +160,7 @@ function createPath(){
     }
     
     //vertical row 10
-    for (var y10 = 120; y10 < 161; y10++){
+    for (var y10 = 120; y10 < 241; y10++){
         fieldPath[y10][400] = true;
     }
     

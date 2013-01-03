@@ -96,7 +96,7 @@ var pacmanGame ={
         if (pacmanGame.gameOver){
             pacmanGame.end();
         }
-        
+        pacmanGame.blueGhost.ramble(pacmanGame.path);
         pacmanGame.man.move(keyhandler.getMovement(), pacmanGame.path);
         
         if (pacmanGame.man.collision(pacmanGame.readGhost)){
@@ -105,13 +105,18 @@ var pacmanGame ={
         }
             
         pacmanGame.readGhost.move();
+        pacmanGame.greenGhost.ramble(pacmanGame.path);
         pacmanGame.render();
+        pacmanGame.whiteGhost.ramble(pacmanGame.path);
     //pacmanGame.draw();
     //requestAnimFrame(pacmanGame.run());
         
     },
     end: function(){
+       
         
+        //pacmanGame.readGhost.draw(pacmanGame.ctx);
+        //pacmanGame.man.draw(pacmanGame.ctx);
         pacmanGame.ctx.font="40pt Calibri";
         pacmanGame.ctx.fillStyle="rgb(255,0,0)";
         pacmanGame.ctx.fillText("Game over",200,315);  

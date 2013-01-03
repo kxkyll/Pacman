@@ -36,8 +36,8 @@ Pacman.prototype.move = function(movement,path){
     var step = 10;
     var newx = this.x + (movement[0] * step);
     var newy = this.y + (movement[1] * step);
-//    console.log("newx: "+newx +" newy "+newy);
-//    console.log("path: "+path[newy][newx]);
+    //    console.log("newx: "+newx +" newy "+newy);
+    //    console.log("path: "+path[newy][newx]);
     if (!path[newy][newx]){
         //console.log ("Wrong direction");
         return;
@@ -76,7 +76,7 @@ Pacman.prototype.collision = function (ghost) {
     //    console.log("y: "+y);
     var dist = Math.sqrt(x*x+y*y);
     //    console.log("dist: "+dist);
-    if (dist < 25) {
+    if (dist < 41) {
         console.log("COLLISION");
         return true;
     }
@@ -118,31 +118,119 @@ Ghost.prototype.draw = function(context) {
 Ghost.prototype.animate = function(){
     this.animation.next();
 }
-Ghost.prototype.move = function (){
-    this.clear();
-    var step = 8;
-    if (this.x < 560) {
-        this.x += step;
-        this.animation.setDirection(ghostDirection.HORIZONTAL);
-    }else if (this.y < 390){
-        this.y += step;
-        this.animation.setDirection(ghostDirection.VERTICAL);
-    }else {
-        this.x = 40;
-        this.y = 40;
+
+Ghost.prototype.ramble = function(path){
+    var step = 5;
+    var random = Math.floor(Math.random()*11);
+    //console.log("random " +random)
+    var newx = null;
+    var newy = null;
+    
+    if (random === 0|| random  == 4){ //up
+        //console.log("nolla "+this.y);
+        newy = this.y - step;
+        //console.log("path: "+path[newy][this.x]);
+        var u = 0;
+        while (u <= random){
+            if (path[newy][this.x]){ //is ok to go up
+            
+                this.clear();
+                this.y = newy;
+                console.log("uusi y ok " +this.y);
+                this.draw(this.context);
+                
+            }
+            u++;
+            newy = this.y -step;
+        }
+        return;
+    }
+    if (random === 1 || random == 9){ //down
+        newy = this.y + step;
+        //console.log("path: "+path[newy][this.x]);
+        var d = 0;
+        while (d <= random){
+            if (path[newy][this.x]){ //is ok to go down
+
+                this.clear();
+                this.y = newy;
+                console.log("uusi y ok " +this.y);
+                this.draw(this.context);   
+            
+            }
+            d++;
+            newy = this.y + step;
+        }
+        return;
+    }
+        
+    if (random === 2|| random ==5 || random == 6 || random == 10){ //right
+        newx = this.x + step;
+        //console.log("path: "+path[this.y][newx]);
+        var r =0;
+        while (r <= random){
+            if (path[this.y][newx]){ //is ok to go right
+           
+                this.clear();
+                this.x = newx;
+                console.log("uusi x ok " +this.x);
+                this.draw(this.context);   
+            }
+            r++;
+            newx = this.x + step;
+        }
+        return;
+    }
+    if (random === 3 || random == 7 || random == 8){ //left
+        newx = this.x - step;
+        //console.log("path: "+path[this.y][newx]);
+        var l = 0;
+        while (l <= random){
+            if (path[this.y][newx]){ //is ok to go left
+               
+                    this.clear();
+                    this.x = newx;
+                    console.log("uusi x ok " +this.x);
+                    this.draw(this.context);   
+                    
+                }
+                l++;
+                newx = this.x - step;
+            }
+            return;
+        }
+   
+        
     }
     
-}
+    
+   
 
-//function Field (context){
-//    this.context = context;
-//    this.image = '<img src="img/omaghost.png">';
-//    this.x = 0;
-//    this.y = 0;
-//    
-//}
-////Ei piirrä -> Uncaucht type error
-//Field.prototype.draw = function (){
-//   
-//    this.context.drawImage(this.image, this.x, this.y);
-//}
+    Ghost.prototype.move = function (){
+        this.clear();
+        var step = 8;
+        if (this.x < 560) {
+            this.x += step;
+            this.animation.setDirection(ghostDirection.HORIZONTAL);
+        }else if (this.y < 390){
+            this.y += step;
+            this.animation.setDirection(ghostDirection.VERTICAL);
+        }else {
+            this.x = 40;
+            this.y = 40;
+        }
+    
+    }
+
+    //function Field (context){
+    //    this.context = context;
+    //    this.image = '<img src="img/omaghost.png">';
+    //    this.x = 0;
+    //    this.y = 0;
+    //    
+    //}
+    ////Ei piirrä -> Uncaucht type error
+    //Field.prototype.draw = function (){
+    //   
+    //    this.context.drawImage(this.image, this.x, this.y);
+    //}
