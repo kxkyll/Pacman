@@ -88,11 +88,12 @@ Pacman.prototype.draw = function(context){
     this.animation.draw(context, this.x, this.y);
 }
 
-function Ghost (x,y, context){
+function Ghost (x,y, context, sprite){
     this.x=x;
     this.y=y;
     this.context = context;
-    this.animation = new Animation ($("#ghostsprite")[0],0,40,36);
+    //this.animation = new Animation ($("#ghostsprite")[0],0,40,36);
+    this.animation = new Animation (sprite,0,40,36);
 
 }
 
@@ -122,17 +123,18 @@ Ghost.prototype.move = function (){
         this.x = 40;
         this.y = 40;
     }
-}
-
-function Field (context){
-    this.context = context;
-    this.image = '<img src="img/omaghost.png">';
-    this.x = 0;
-    this.y = 0;
     
 }
-//Ei piirrä -> Uncaucht type error
-Field.prototype.draw = function (){
-   
-    this.context.drawImage(this.image, this.x, this.y);
-}
+
+//function Field (context){
+//    this.context = context;
+//    this.image = '<img src="img/omaghost.png">';
+//    this.x = 0;
+//    this.y = 0;
+//    
+//}
+////Ei piirrä -> Uncaucht type error
+//Field.prototype.draw = function (){
+//   
+//    this.context.drawImage(this.image, this.x, this.y);
+//}
