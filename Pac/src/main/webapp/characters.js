@@ -31,9 +31,23 @@ Pacman.prototype.clear = function(){
     this.context.fillRect(this.x,this.y, 40,36);
 }
 
-Pacman.prototype.move = function(movement){
+Pacman.prototype.move = function(movement,path){
     this.clear();
     var step = 10;
+    var newx = this.x + (movement[0] * step);
+    var newy = this.y + (movement[1] * step);
+    console.log("newx: "+newx +" newy "+newy);
+    console.log("path: "+path[newy][newx]);
+    if (!path[newy][newx]){
+        console.log ("ei voi mennä");
+        return;
+    }
+//    //    if (!path[x][y]){
+//    //        console.log("ei voi mennä");
+//    //        //illegal direction
+//    //        return;
+//    //    }
+//    
     this.x += (movement[0] * step);
     this.y += (movement[1] * step);
     
@@ -60,14 +74,14 @@ Pacman.prototype.move = function(movement){
 }
 
 Pacman.prototype.collision = function (ghost) {
-    console.log("pac x: "+ this.x +" pac y: " +this.y);
-    console.log("ghost x: "+ ghost.x +" ghost y: " +ghost.y);
+    //    console.log("pac x: "+ this.x +" pac y: " +this.y);
+    //    console.log("ghost x: "+ ghost.x +" ghost y: " +ghost.y);
     var x = Math.abs(this.x - ghost.x);
-    console.log("x: "+x);
+    //    console.log("x: "+x);
     var y = Math.abs(this.y - ghost.y);
-    console.log("y: "+y);
+    //    console.log("y: "+y);
     var dist = Math.sqrt(x*x+y*y);
-    console.log("dist: "+dist);
+    //    console.log("dist: "+dist);
     if (dist < 25) {
         console.log("COLLISION");
         return true;

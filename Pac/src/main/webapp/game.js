@@ -20,13 +20,13 @@ var pacmanGame ={
     greenGhost:null,
     whiteGhost:null,
     deadGhost:null,
-    field: null,
+    path: null,
     gameOver: null,
     
     init: function(){
         //console.log("init");
         pacmanGame.ctx = $("#pacman")[0].getContext("2d");
-        pacmanGame.man = new Pacman (120, 200, pacmanGame.ctx);
+        pacmanGame.man = new Pacman (40, 40, pacmanGame.ctx);
         pacmanGame.readGhost = new Ghost (400, 200, pacmanGame.ctx, $("#ghostsprite")[0]);
         pacmanGame.blueGhost = new Ghost (360, 200, pacmanGame.ctx, $("#ghostspriteBlue")[0]);
         pacmanGame.greenGhost = new Ghost (360, 240, pacmanGame.ctx, $("#ghostspriteGreen")[0]);
@@ -43,6 +43,7 @@ var pacmanGame ={
         pacmanGame.ctx.fillRect(0,0, 640,480);
         //pacmanGame.field.draw();
         drawField(pacmanGame.ctx);
+        pacmanGame.path = createPath();
         
 //        //uppder border
 //        pacmanGame.ctx.fillStyle="rgb(25,25,112)";
@@ -95,7 +96,7 @@ var pacmanGame ={
         if (pacmanGame.gameOver){
             pacmanGame.end();
         }
-        pacmanGame.man.move(keyhandler.getMovement());
+        pacmanGame.man.move(keyhandler.getMovement(), pacmanGame.path);
         if (pacmanGame.man.collision(pacmanGame.readGhost)){
             pacmanGame.gameOver = true;
             pacmanGame.end();
@@ -111,7 +112,7 @@ var pacmanGame ={
         
         pacmanGame.ctx.font="40pt Calibri";
         pacmanGame.ctx.fillStyle="rgb(255,0,0)";
-        pacmanGame.ctx.fillText("Game over",200,280);  
+        pacmanGame.ctx.fillText("Game over",200,315);  
     }
 };
 
