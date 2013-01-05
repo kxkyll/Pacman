@@ -21,9 +21,9 @@ createFood = function(path,context){
     var foodCount = 0;
     for (var i = 0; i < 481; i+=40) {
         
-        for (var j = 0; j < 641; j+=20) {
+        for (var j = 0; j < 641; j+=40) {
             if (path[i][j] == true){
-                console.log("ruokaa: "+i +" "+j);
+                //console.log("ruokaa: "+i +" "+j);
                 foods[foodCount] = new Food(j+20,i+20,context);
                 foods[foodCount].draw();            
                 foodCount++;
