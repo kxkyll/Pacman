@@ -155,9 +155,23 @@ function createPath(){
         fieldPath[y9][360] = true;
     }
     
+    
     for (var y92 = 320; y92 < 401; y92++){
         fieldPath[y92][360] = true;
     }
+    //vertical row between 9 and 10
+    
+    for (var y9 = 120; y9 < 241; y9++){
+        fieldPath[y9][370] = true;
+    }
+    for (var y9 = 120; y9 < 241; y9++){
+        fieldPath[y9][380] = true;
+    }
+    for (var y9 = 120; y9 < 241; y9++){
+        fieldPath[y9][390] = true;
+    }
+    
+    
     
     //vertical row 10
     for (var y10 = 120; y10 < 241; y10++){

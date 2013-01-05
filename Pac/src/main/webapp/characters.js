@@ -76,7 +76,7 @@ Pacman.prototype.collision = function (ghost) {
     //    console.log("y: "+y);
     var dist = Math.sqrt(x*x+y*y);
     //    console.log("dist: "+dist);
-    if (dist < 41) {
+    if (dist < 35) {
         console.log("COLLISION");
         return true;
     }
@@ -136,7 +136,7 @@ Ghost.prototype.ramble = function(path){
             
                 this.clear();
                 this.y = newy;
-                console.log("uusi y ok " +this.y);
+//                console.log("uusi y ok " +this.y);
                 this.draw(this.context);
                 
             }
@@ -154,7 +154,7 @@ Ghost.prototype.ramble = function(path){
 
                 this.clear();
                 this.y = newy;
-                console.log("uusi y ok " +this.y);
+  //              console.log("uusi y ok " +this.y);
                 this.draw(this.context);   
             
             }
@@ -173,7 +173,7 @@ Ghost.prototype.ramble = function(path){
            
                 this.clear();
                 this.x = newx;
-                console.log("uusi x ok " +this.x);
+    //            console.log("uusi x ok " +this.x);
                 this.draw(this.context);   
             }
             r++;
@@ -190,7 +190,7 @@ Ghost.prototype.ramble = function(path){
                
                     this.clear();
                     this.x = newx;
-                    console.log("uusi x ok " +this.x);
+      //              console.log("uusi x ok " +this.x);
                     this.draw(this.context);   
                     
                 }

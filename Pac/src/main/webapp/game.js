@@ -20,6 +20,8 @@ var pacmanGame ={
     greenGhost:null,
     whiteGhost:null,
     deadGhost:null,
+    food:null,
+    foodTable:null,
     path: null,
     gameOver: null,
     
@@ -32,7 +34,12 @@ var pacmanGame ={
         pacmanGame.greenGhost = new Ghost (360, 240, pacmanGame.ctx, $("#ghostspriteGreen")[0]);
         pacmanGame.whiteGhost = new Ghost (400, 240, pacmanGame.ctx, $("#ghostspriteWhite")[0]);
         pacmanGame.deadGhost = new Ghost (200, 40, pacmanGame.ctx, $("#ghostspriteDead")[0]);
+        
         //pacmanGame.field = new Field(pacmanGame.ctx);
+        pacmanGame.path = createPath();
+        //pacmanGame.food = new Food(60,60,pacmanGame.ctx);
+        
+        
         pacmanGame.draw();
     },
     draw: function(){
@@ -43,32 +50,12 @@ var pacmanGame ={
         pacmanGame.ctx.fillRect(0,0, 640,480);
         //pacmanGame.field.draw();
         drawField(pacmanGame.ctx);
-        pacmanGame.path = createPath();
         
-//        //uppder border
-//        pacmanGame.ctx.fillStyle="rgb(25,25,112)";
-//        pacmanGame.ctx.fillRect(0,0, 640,40);
-//        
-//        //lower border
-//        //pacmanGame.ctx.fillStyle="rgb(25,25,112)";
-//        pacmanGame.ctx.fillRect(0,440, 640,480);
-//        
-//        //right border
-//        //pacmanGame.ctx.fillStyle="rgb(25,25,112)";
-//        pacmanGame.ctx.fillRect(600,0, 600,480);
-//        
-//        //left border
-//        //pacmanGame.ctx.fillStyle="rgb(25,25,112)";
-//        pacmanGame.ctx.fillRect(0,0,40,480);
-//        
-//        //upper left corner
-//        pacmanGame.ctx.fillRect(80,80,40,80);
-//        pacmanGame.ctx.fillRect(80,80,120,40);
-//        
-//        //lower right corner
-//        pacmanGame.ctx.fillRect(400,360,120,40);
-//        pacmanGame.ctx.fillRect(520,320,40,80);
-//        
+        pacmanGame.foodtable = createFood(pacmanGame.path,pacmanGame.ctx);
+
+        
+        //pacmanGame.path = createPath();
+        
         
     //        pacmanGame.man.animate();
     //        pacmanGame.man.draw(pacmanGame.ctx);
@@ -77,6 +64,7 @@ var pacmanGame ={
         
     },
     render: function(){
+        //pacmanGame.food.draw();
         pacmanGame.man.animate();
         pacmanGame.man.draw(pacmanGame.ctx);
         pacmanGame.readGhost.animate(); 
@@ -105,9 +93,9 @@ var pacmanGame ={
         }
             
         pacmanGame.readGhost.move();
-        pacmanGame.greenGhost.ramble(pacmanGame.path);
+        //pacmanGame.greenGhost.ramble(pacmanGame.path);
         pacmanGame.render();
-        pacmanGame.whiteGhost.ramble(pacmanGame.path);
+        //pacmanGame.whiteGhost.ramble(pacmanGame.path);
     //pacmanGame.draw();
     //requestAnimFrame(pacmanGame.run());
         
