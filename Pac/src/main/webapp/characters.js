@@ -1,8 +1,8 @@
 var pacmanDirection = {
     RIGHT: 0,
-    LEFT: 39,
-    UP: 80,
-    DOWN:120
+    LEFT: 37,
+    UP: 74,
+    DOWN:112
 //    RIGHT: 0,
 //    LEFT: 36,
 //    UP: 72,
@@ -19,7 +19,7 @@ function Pacman (x,y, context){
     this.x=x;
     this.y=y;
     this.context = context;
-    this.animation = new Animation ($("#pacsprite")[0],0,40,39);
+    this.animation = new Animation ($("#pacsprite")[0],0,37,37);
 }
 
 Pacman.prototype.getX = function(){
@@ -31,9 +31,9 @@ Pacman.prototype.getY = function(){
 
 Pacman.prototype.clear = function(){
     //this.context.clearRect(this.x,this.y,40,36);
-    this.context.clearRect(this.x,this.y,40,40);
+    this.context.clearRect(this.x,this.y,37,37);
     this.context.fillStyle="rgb(195,195,195)";
-    this.context.fillRect(this.x,this.y, 40,40);
+    this.context.fillRect(this.x,this.y, 38,38);
 }
 
 Pacman.prototype.move = function(movement,path){

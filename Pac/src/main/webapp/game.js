@@ -17,8 +17,8 @@ var pacmanGame ={
     man: null,
     readGhost: null,
     blueGhost:null,
-    greenGhost:null,
-    whiteGhost:null,
+    orangeGhost:null,
+    pinkGhost:null,
     deadGhost:null,
     food:null,
     foodTable:null,
@@ -30,9 +30,9 @@ var pacmanGame ={
         pacmanGame.ctx = $("#pacman")[0].getContext("2d");
         pacmanGame.man = new Pacman (40, 40, pacmanGame.ctx);
         pacmanGame.readGhost = new Ghost (400, 200, pacmanGame.ctx, $("#ghostsprite")[0]);
-        pacmanGame.blueGhost = new Ghost (360, 200, pacmanGame.ctx, $("#ghostspriteBlue")[0]);
-        pacmanGame.greenGhost = new Ghost (360, 240, pacmanGame.ctx, $("#ghostspriteGreen")[0]);
-        pacmanGame.whiteGhost = new Ghost (400, 240, pacmanGame.ctx, $("#ghostspriteWhite")[0]);
+        pacmanGame.blueGhost = new Ghost (360, 200, pacmanGame.ctx, $("#ghostspriteInky")[0]);
+        pacmanGame.orangeGhost = new Ghost (360, 240, pacmanGame.ctx, $("#ghostspriteOrange")[0]);
+        pacmanGame.pinkGhost = new Ghost (400, 240, pacmanGame.ctx, $("#ghostspritePink")[0]);
         pacmanGame.deadGhost = new Ghost (200, 40, pacmanGame.ctx, $("#ghostspriteDead")[0]);
         
         //pacmanGame.field = new Field(pacmanGame.ctx);
@@ -71,10 +71,10 @@ var pacmanGame ={
         pacmanGame.readGhost.draw(pacmanGame.ctx);
         pacmanGame.blueGhost.animate(); 
         pacmanGame.blueGhost.draw(pacmanGame.ctx);
-        pacmanGame.greenGhost.animate(); 
-        pacmanGame.greenGhost.draw(pacmanGame.ctx);
-        pacmanGame.whiteGhost.animate(); 
-        pacmanGame.whiteGhost.draw(pacmanGame.ctx);
+        pacmanGame.orangeGhost.animate(); 
+        pacmanGame.orangeGhost.draw(pacmanGame.ctx);
+        pacmanGame.pinkGhost.animate(); 
+        pacmanGame.pinkGhost.draw(pacmanGame.ctx);
 
 
 
