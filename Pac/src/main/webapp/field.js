@@ -1,3 +1,218 @@
+function Node (){
+    this.left = false;
+    this.right = false;
+    this.up = false;
+    this.down = false;
+}
+function createNavi(){
+    //create array
+    var fieldNavi = new Array(2);
+    //make array two dimensional
+    for (var k = 0; k < 481; k++) {
+        fieldNavi[k] = new Array(640);
+    }
+    //init array 
+    for (var i = 0; i < 481; i++) {
+        for (var j = 0; j < 641; j++) {
+            fieldNavi[i][j] = new Node();
+        }
+    }
+    
+    //mark the possible pathways with true
+    // todo: try to get this nicer by using context.getImageData to figure out the
+    // path by reading the color from the canvas
+    
+    // row 1
+    for (var x1 = 45; x1 < 561; x1++){
+        fieldNavi[80][x1].left = true;
+    }
+    
+    for (var x1 = 40; x1 < 561; x1++){
+        fieldNavi[80][x1].right = true;
+    }
+    
+    fieldNavi[40][40].down = true;
+    
+    //    
+    //    // row 2
+    //    fieldNavi[80][40] = true;
+    //    fieldNavi[80][200] = true;
+    //    fieldNavi[80][320] = true;
+    //    fieldNavi[80][560] = true;
+    //    
+    //    //row 3
+    //    fieldNavi[120][40] = true;
+    //    
+    //    for (var x31 = 120; x31 < 201; x31++){
+    //        fieldNavi[120][x31] = true;
+    //    }
+    //    for (var x32 = 280; x32 < 481; x32++){
+    //        fieldNavi[120][x32] = true;
+    //    }
+    //    
+    //    fieldNavi[120][560] = true;
+    //    
+    //    //row 3,5
+    //    for (var x35 = 120; x35 < 201; x35++){
+    //        fieldNavi[130][x35] = true;
+    //        fieldNavi[140][x35] = true;
+    //        fieldNavi[150][x35] = true;
+    //    }
+    //    for (var x352 = 280; x352 < 481; x352++){
+    //        fieldNavi[130][x352] = true;
+    //        fieldNavi[140][x352] = true;
+    //        fieldNavi[150][x352] = true;
+    //    }
+    //    
+    //    
+    //    //row 4
+    //    for (var x4 = 40; x4 < 201; x4++){
+    //        fieldNavi[160][x4] = true;
+    //    }
+    //    for (var x42 = 280; x42 < 481; x42++){
+    //        fieldNavi[160][x42] = true;
+    //    }
+    //    
+    //    fieldNavi[160][560] = true;
+    //    
+    //    //row 5
+    //    fieldNavi[200][40] = true;
+    //    fieldNavi[200][120] = true;
+    //    fieldNavi[200][280] = true;
+    //    for (var x5 = 360; x5 < 401; x5++){
+    //        fieldNavi[200][x5] = true;
+    //    }
+    //    
+    //    fieldNavi[200][480] = true;
+    //    fieldNavi[200][560] = true;
+    //    
+    //    //row 6
+    //    fieldNavi[240][40] = true;
+    //    for (var x6 = 120; x6 < 281; x6++){
+    //        fieldNavi[240][x6] = true;
+    //    }
+    //    for (var x62 = 360; x62 < 401; x62++){
+    //        fieldNavi[240][x62] = true;
+    //    }
+    //    for (var x63 = 480; x63 < 561; x63++){
+    //        fieldNavi[240][x63] = true;
+    //    }
+    //    
+    //    //row 7
+    //    fieldNavi[280][40] = true;
+    //    fieldNavi[280][120] = true;
+    //    fieldNavi[280][280] = true;
+    //    fieldNavi[280][480] = true;
+    //    fieldNavi[280][560] = true;
+    //    
+    //    //row 8
+    //    fieldNavi[320][40] = true;
+    //    
+    //    for (var x8 = 120; x8 < 481; x8++){
+    //        fieldNavi[320][x8] = true;
+    //    }
+    //    fieldNavi[320][560] = true;
+    //    
+    //    //row 9
+    //    fieldNavi[360][40] = true;
+    //    fieldNavi[360][160] = true;
+    //    fieldNavi[360][360] = true;
+    //    fieldNavi[360][560] = true;
+    //    
+    //    //row 10
+    //    
+    //    for (var x10 = 40; x10 < 561; x10++){
+    //        fieldNavi[400][x10] = true;
+    //    }
+    //    
+    //    //vertical row 1
+    //    for (var y1 = 40; y1 < 401; y1++){
+    //        fieldNavi[y1][40] = true;
+    //    }
+    //    
+    //    //vertical row 2
+    //    
+    //    //vertical row 3
+    //    for (var y3 = 120; y3 < 321; y3++){
+    //        fieldNavi[y3][120] = true;
+    //    }
+    //    
+    //    //vertical row 4
+    //    for (var y4 = 120; y4 < 161; y4++){
+    //        fieldNavi[y4][160] = true;
+    //    }
+    //    
+    //    for (var y42 = 320; y42 < 401; y42++){
+    //        fieldNavi[y42][160] = true;
+    //    }
+    //    
+    //    //vertical row 5
+    //    for (var y5 = 40; y5 < 161; y5++){
+    //        fieldNavi[y5][200] = true;
+    //    }
+    //    
+    //    //vertical row 6
+    //    
+    //    //vertical row 7
+    //    for (var y7 = 120; y7 < 321; y7++){
+    //        fieldNavi[y7][280] = true;
+    //    }
+    //    
+    //    //vertical row 8
+    //    for (var y8 = 40; y8 < 161; y8++){
+    //        fieldNavi[y8][320] = true;
+    //    }
+    //    
+    //    //vertical row 9
+    //    for (var y9 = 120; y9 < 241; y9++){
+    //        fieldNavi[y9][360] = true;
+    //    }
+    //    
+    //    
+    //    for (var y92 = 320; y92 < 401; y92++){
+    //        fieldNavi[y92][360] = true;
+    //    }
+    //    //vertical row between 9 and 10
+    //    
+    //    for (var y9 = 120; y9 < 241; y9++){
+    //        fieldNavi[y9][370] = true;
+    //    }
+    //    for (var y9 = 120; y9 < 241; y9++){
+    //        fieldNavi[y9][380] = true;
+    //    }
+    //    for (var y9 = 120; y9 < 241; y9++){
+    //        fieldNavi[y9][390] = true;
+    //    }
+    //    
+    //    
+    //    
+    //    //vertical row 10
+    //    for (var y10 = 120; y10 < 241; y10++){
+    //        fieldNavi[y10][400] = true;
+    //    }
+    //    
+    //    //vertical row 11
+    //    for (var y11 = 120; y11 < 161; y11++){
+    //        fieldNavi[y11][440] = true;
+    //    }
+    //    
+    //    //vertical row 12
+    //    for (var y12 = 120; y12 < 321; y12++){
+    //        fieldNavi[y12][480] = true;
+    //    }
+    //    
+    //    //vertical row 13
+    //    
+    //    //vertical row 14
+    //    for (var y2 = 40; y2 < 401; y2++){
+    //        fieldNavi[y2][560] = true;
+    //    }
+    //    
+    
+            
+    return fieldNavi;
+}
+
 function createPath(){
     //create array
     var fieldPath = new Array(2);
@@ -9,7 +224,7 @@ function createPath(){
     for (var i = 0; i < 481; i++) {
         for (var j = 0; j < 641; j++) {
             fieldPath[i][j] = false;
-       }
+        }
     }
     
     //mark the possible pathways with true

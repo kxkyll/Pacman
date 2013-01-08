@@ -10,10 +10,16 @@ var pacmanDirection = {
 }
 
 var ghostDirection = {
+    UP:0,
+    DOWN:1,
+    LEFT:2,
+    RIGHT:3
+}
+
+var ghostOrientation = {
     VERTICAL:0,
     HORIZONTAL: 38
 }
-
 
 function Pacman (x,y, context){
     this.x=x;
@@ -88,6 +94,30 @@ Pacman.prototype.collision = function (ghost) {
     return false;
 }
 
+Pacman.prototype.eat = function (foods) {
+    var remove = null;
+    for (var i = 0; i< foods.length;i++){
+        var x = Math.abs(this.x - foods[i].x);
+        //    console.log("x: "+x);
+        var y = Math.abs(this.y - foods[i].y);
+        //    console.log("y: "+y);
+        var dist = Math.sqrt(x*x+y*y);
+        //    console.log("dist: "+dist);
+        if (dist < 30) {
+            console.log("YAM YAM");
+            remove = i;
+        }    
+        
+    }
+    if (remove != null){
+        foods.splice(remove,1);
+    }
+    
+    
+    return foods;
+}
+
+
 Pacman.prototype.animate = function(){
     this.animation.next();
 }
@@ -107,6 +137,10 @@ function Ghost (x,y, context, sprite){
     this.context = context;
     //this.animation = new Animation ($("#ghostsprite")[0],0,40,36);
     this.animation = new Animation (sprite,0,40,36);
+    this.speed = 5;
+    this.targetX = 0;
+    this.targetY = 0;
+    this.direction = ghostDirection.UP;
 
 }
 
@@ -122,6 +156,15 @@ Ghost.prototype.draw = function(context) {
 
 Ghost.prototype.animate = function(){
     this.animation.next();
+}
+
+Ghost.prototype.setSpeed = function(speed){
+    this.speed = speed;
+}
+
+Ghost.prototype.setTarget = function(target){
+    this.targetX = target[0];
+    this.targetY = target[1];
 }
 
 Ghost.prototype.ramble = function(path){
@@ -141,7 +184,7 @@ Ghost.prototype.ramble = function(path){
             
                 this.clear();
                 this.y = newy;
-//                console.log("uusi y ok " +this.y);
+                //                console.log("uusi y ok " +this.y);
                 this.draw(this.context);
                 
             }
@@ -159,7 +202,7 @@ Ghost.prototype.ramble = function(path){
 
                 this.clear();
                 this.y = newy;
-  //              console.log("uusi y ok " +this.y);
+                //              console.log("uusi y ok " +this.y);
                 this.draw(this.context);   
             
             }
@@ -178,7 +221,7 @@ Ghost.prototype.ramble = function(path){
            
                 this.clear();
                 this.x = newx;
-    //            console.log("uusi x ok " +this.x);
+                //            console.log("uusi x ok " +this.x);
                 this.draw(this.context);   
             }
             r++;
@@ -193,49 +236,197 @@ Ghost.prototype.ramble = function(path){
         while (l <= random){
             if (path[this.y][newx]){ //is ok to go left
                
-                    this.clear();
-                    this.x = newx;
-      //              console.log("uusi x ok " +this.x);
-                    this.draw(this.context);   
+                this.clear();
+                this.x = newx;
+                //              console.log("uusi x ok " +this.x);
+                this.draw(this.context);   
                     
-                }
-                l++;
-                newx = this.x - step;
             }
-            return;
+            l++;
+            newx = this.x - step;
         }
+        return;
+    }
    
         
+}
+    
+Ghost.prototype.move = function (){
+    this.clear();
+    var step = 8;
+    if (this.x < 560) {
+        this.x += step;
+        this.animation.setDirection(ghostOrientation.HORIZONTAL);
+    }else if (this.y < 390){
+        this.y += step;
+        this.animation.setDirection(ghostOrientation.VERTICAL);
+    }else {
+        this.x = 40;
+        this.y = 40;
     }
     
-    
-   
+}
 
-    Ghost.prototype.move = function (){
-        this.clear();
-        var step = 8;
-        if (this.x < 560) {
-            this.x += step;
-            this.animation.setDirection(ghostDirection.HORIZONTAL);
-        }else if (this.y < 390){
-            this.y += step;
-            this.animation.setDirection(ghostDirection.VERTICAL);
-        }else {
-            this.x = 40;
-            this.y = 40;
+Ghost.prototype.navi = function (navi){
+    var newx = this.x + this.speed;
+    var newy;
+    var directionOK = false;
+    if (this.direction == ghostDirection.UP){ 
+        console.log("current up");
+        newy = this.y - this.speed;
+        if (navi[newy][this.x].up){ //is ok to go up
+            console.log("continue up");
+            directionOK = true;
+            this.clear();
+            console.log("y: "+this.y);
+            this.y = newy;
+            console.log("newy: "+this.y);
         }
-    
     }
+    if (this.direction == ghostDirection.DOWN){ 
+        console.log("current down");
+        newy = this.y + this.speed;
+        if (navi[newy][this.x].down){ //is ok to go down
+            console.log("continue");
+            directionOK = true;
+            this.clear();
+            console.log("y: "+this.y);
+            this.y = newy;
+            console.log("newy: "+this.y);
+           
+        }
+    }    
+    if (this.direction == ghostDirection.LEFT){ 
+        console.log("current left");
+        newx = this.x - this.speed;
+        if (navi[this.y][newx].left){ //is ok to go left
+            console.log("continue");
+            directionOK = true;
+            this.clear();
+            console.log("x: "+this.x);
+            this.x = newx;
+            console.log("newx: "+this.x);
+        } 
+    }
+    
+    if (this.direction == ghostDirection.RIGHT){ 
+        console.log("current right");
+        newx = this.x + this.speed;
+        if (navi[this.y][newx].right){ //is ok to go right
+            console.log("continue");
+            directionOK = true;
+            this.clear();
+            console.log("x: "+this.x);
+            this.x = newx;
+            console.log("newx: "+this.x);
+        }
+ 
+    } 
+    if (directionOK == false){ // current direction hit's the wall       
+        console.log("change current: " +this.direction);
+        var newDirection = Math.floor(Math.random()*4);
+        console.log(+this.direction + " another one "+newDirection);
+        while (true){
+            newDirection = Math.floor(Math.random()*4);
+            console.log(+this.direction + " another one "+newDirection);
+            if (this.direction != newDirection){
+                break;
+            }
+                
+        }
+        console.log("ulkona");
+        this.direction = newDirection;
+    }       
+    console.log("huh");
+    
+    if (this.direction == ghostDirection.UP || this.direction == ghostDirection.DOWN ){
+        console.log("vertical");
+        this.animation.setDirection(ghostOrientation.VERTICAL);
+    }
+    if (this.direction == ghostDirection.LEFT || this.direction == ghostDirection.RIGHT ){
+        console.log("horizontal")
+        this.animation.setDirection(ghostOrientation.HORIZONTAL);
+    }
+    console.log("piirtämään");
+    this.draw(this.context);
+}
 
-    //function Field (context){
-    //    this.context = context;
-    //    this.image = '<img src="img/omaghost.png">';
-    //    this.x = 0;
-    //    this.y = 0;
-    //    
-    //}
-    ////Ei piirrä -> Uncaucht type error
-    //Field.prototype.draw = function (){
-    //   
-    //    this.context.drawImage(this.image, this.x, this.y);
-    //}
+Ghost.prototype.moveAround = function (path){
+    var newx = null;
+    var newy = null;
+    
+    if (this.direction == ghostDirection.UP){ 
+       
+        newy = this.y - this.speed;
+        
+        if (path[newy][this.x]){ //is ok to go up
+            this.clear();
+            this.y = newy;
+        } else {
+            this.direction = ghostDirection.RIGHT;
+            //this.direction = Math.floor(Math.random()*4);
+            return;
+        }
+    }
+    if (this.direction == ghostDirection.DOWN){ 
+       
+        newy = this.y + this.speed;
+        
+        if (path[newy][this.x]){ //is ok to go down
+            this.clear();
+            this.y = newy;
+        } else {
+            this.direction = ghostDirection.LEFT;
+            //this.direction = Math.floor(Math.random()*4);
+            return;
+        }
+    }
+    
+    if (this.direction == ghostDirection.LEFT){ 
+       
+        newx = this.x - this.speed;
+        
+        if (path[this.y][newx]){ //is ok to go left
+            this.clear();
+            this.x = newx;
+        } else {
+            this.direction = ghostDirection.UP;
+            //this.direction = Math.floor(Math.random()*4);
+            return;
+        }
+    }
+    
+    if (this.direction == ghostDirection.RIGHT){ 
+       
+        newx = this.x + this.speed;
+        
+        if (path[this.y][newx]){ //is ok to go right
+            this.clear();
+            this.x = newx;
+        } else {
+            this.direction = ghostDirection.DOWN;
+            //this.direction = Math.floor(Math.random()*4);
+            return;
+        }
+    }
+    
+    if (this.direction == ghostDirection.UP || this.direction == ghostDirection.DOWN ){
+        this.animation.setDirection(ghostOrientation.VERTICAL);
+    }
+    if (this.direction == ghostDirection.LEFT || this.direction == ghostDirection.RIGHT ){
+        this.animation.setDirection(ghostOrientation.HORIZONTAL);
+    }
+}
+
+
+Ghost.prototype.hunt = function (pacman){
+    var newTarget = new Array();
+    if (this.x == targetX && this.y == targetY) {
+        newTarget[0] = pacman.getX();
+        newTarget[1] = pacman.getY();
+        this.setTarget(newTarget);
+        return;
+    }
+        
+        
+}

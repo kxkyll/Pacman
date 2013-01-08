@@ -28,7 +28,13 @@ createFood = function(path,context){
                 foods[foodCount].draw();            
                 foodCount++;
             }
-       }
+        }
     }
     return foods;
+}
+drawFoods = function(foods,context){
+    for (f in foods){
+        foods[f].draw();            
+    }
+        
 }

@@ -22,25 +22,28 @@ var pacmanGame ={
     deadGhost:null,
     food:null,
     foodTable:null,
-    path: null,
+    path:null,
+    navi:null,
     gameOver: null,
     
     init: function(){
         //console.log("init");
         pacmanGame.ctx = $("#pacman")[0].getContext("2d");
-        pacmanGame.man = new Pacman (40, 40, pacmanGame.ctx);
+        pacmanGame.man = new Pacman (200, 40, pacmanGame.ctx); 
+        
         pacmanGame.readGhost = new Ghost (400, 200, pacmanGame.ctx, $("#ghostsprite")[0]);
-        pacmanGame.blueGhost = new Ghost (360, 200, pacmanGame.ctx, $("#ghostspriteInky")[0]);
+        //pacmanGame.blueGhost = new Ghost (360, 200, pacmanGame.ctx, $("#ghostspriteInky")[0]);
+        pacmanGame.blueGhost = new Ghost (120, 40, pacmanGame.ctx, $("#ghostspriteInky")[0]);
         pacmanGame.orangeGhost = new Ghost (360, 240, pacmanGame.ctx, $("#ghostspriteOrange")[0]);
         pacmanGame.pinkGhost = new Ghost (400, 240, pacmanGame.ctx, $("#ghostspritePink")[0]);
         pacmanGame.deadGhost = new Ghost (200, 40, pacmanGame.ctx, $("#ghostspriteDead")[0]);
         
-        //pacmanGame.field = new Field(pacmanGame.ctx);
         pacmanGame.path = createPath();
-        //pacmanGame.food = new Food(60,60,pacmanGame.ctx);
-        
-        
+        pacmanGame.navi = createNavi();
+
         pacmanGame.draw();
+
+
     },
     draw: function(){
         pacmanGame.ctx.clearRect(0,0,640,480);
@@ -51,10 +54,10 @@ var pacmanGame ={
         //pacmanGame.field.draw();
         drawField(pacmanGame.ctx);
         
-        pacmanGame.foodtable = createFood(pacmanGame.path,pacmanGame.ctx);
+    pacmanGame.foodTable = createFood(pacmanGame.path,pacmanGame.ctx);
 
         
-        //pacmanGame.path = createPath();
+    //pacmanGame.path = createPath();
         
         
     //        pacmanGame.man.animate();
@@ -65,17 +68,19 @@ var pacmanGame ={
     },
     render: function(){
         //pacmanGame.food.draw();
+        drawFoods(pacmanGame.foodTable,pacmanGame.ctx);
         pacmanGame.man.animate();
         pacmanGame.man.draw(pacmanGame.ctx);
         pacmanGame.readGhost.animate(); 
-        pacmanGame.readGhost.draw(pacmanGame.ctx);
+        
         pacmanGame.blueGhost.animate(); 
         pacmanGame.blueGhost.draw(pacmanGame.ctx);
         pacmanGame.orangeGhost.animate(); 
         pacmanGame.orangeGhost.draw(pacmanGame.ctx);
         pacmanGame.pinkGhost.animate(); 
         pacmanGame.pinkGhost.draw(pacmanGame.ctx);
-
+        
+        pacmanGame.readGhost.draw(pacmanGame.ctx);
 
 
     },
@@ -84,18 +89,25 @@ var pacmanGame ={
         if (pacmanGame.gameOver){
             pacmanGame.end();
         }
-        pacmanGame.blueGhost.ramble(pacmanGame.path);
+        //pacmanGame.blueGhost.ramble(pacmanGame.path);
+        //pacmanGame.blueGhost.navi(pacmanGame.navi);
         pacmanGame.man.move(keyhandler.getMovement(), pacmanGame.path);
         
         if (pacmanGame.man.collision(pacmanGame.readGhost)){
             pacmanGame.gameOver = true;
             pacmanGame.end();
         }
-            
-        pacmanGame.readGhost.move();
+        //testi
+        pacmanGame.foodTable=pacmanGame.man.eat(pacmanGame.foodTable);
+        if (pacmanGame.foodTable.length == 0){
+            pacmanGame.gameOver = true;
+            pacmanGame.end();
+        }
+        console.log("foods left: " +pacmanGame.foodTable.length);    
+        pacmanGame.readGhost.moveAround(pacmanGame.path);
         //pacmanGame.greenGhost.ramble(pacmanGame.path);
         pacmanGame.render();
-        //pacmanGame.whiteGhost.ramble(pacmanGame.path);
+    //pacmanGame.whiteGhost.ramble(pacmanGame.path);
     //pacmanGame.draw();
     //requestAnimFrame(pacmanGame.run());
         
@@ -108,6 +120,9 @@ var pacmanGame ={
         pacmanGame.ctx.font="40pt Calibri";
         pacmanGame.ctx.fillStyle="rgb(255,0,0)";
         pacmanGame.ctx.fillText("Game over",200,315);  
+        if (pacmanGame.foodTable.length == 0){
+            pacmanGame.ctx.fillText("Pac-man is a champ",150,355);  
+        }
     }
 };
 
