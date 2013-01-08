@@ -103,7 +103,7 @@ Pacman.prototype.eat = function (foods) {
             //console.log("y: "+y+" foods y: "+foods[i].y);
         var dist = Math.sqrt(x*x+y*y);
             //console.log("dist: "+dist);
-        if (dist < 29) {
+        if (dist <= 29) {
             console.log("YAM YAM");
             remove = i;
         }    

@@ -103,7 +103,7 @@ var pacmanGame ={
             pacmanGame.gameOver = true;
             pacmanGame.end();
         }
-        console.log("foods left: " +pacmanGame.foodTable.length);    
+        //console.log("foods left: " +pacmanGame.foodTable.length);    
         pacmanGame.readGhost.moveAround(pacmanGame.path);
         //pacmanGame.greenGhost.ramble(pacmanGame.path);
         pacmanGame.render();
@@ -121,7 +121,7 @@ var pacmanGame ={
         pacmanGame.ctx.fillStyle="rgb(255,0,0)";
         pacmanGame.ctx.fillText("Game over",200,315);  
         if (pacmanGame.foodTable.length == 0){
-            pacmanGame.ctx.fillText("Pac-man is a champ",140,355);  
+            pacmanGame.ctx.fillText("Pac-man is a champ",120,355);  
         }
     }
 };

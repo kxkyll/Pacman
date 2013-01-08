@@ -1,7 +1,7 @@
 function Food (x,y,context){
     this.x=x;
     this.y=y;
-    this.r=6;
+    this.r=5;
     this.context=context;
 }
 
