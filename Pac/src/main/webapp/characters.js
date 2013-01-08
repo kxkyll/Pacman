@@ -98,12 +98,12 @@ Pacman.prototype.eat = function (foods) {
     var remove = null;
     for (var i = 0; i< foods.length;i++){
         var x = Math.abs(this.x - foods[i].x);
-        //    console.log("x: "+x);
+            //console.log("x: "+x +" foods x: "+foods[i].x);
         var y = Math.abs(this.y - foods[i].y);
-        //    console.log("y: "+y);
+            //console.log("y: "+y+" foods y: "+foods[i].y);
         var dist = Math.sqrt(x*x+y*y);
-        //    console.log("dist: "+dist);
-        if (dist < 30) {
+            //console.log("dist: "+dist);
+        if (dist < 29) {
             console.log("YAM YAM");
             remove = i;
         }    

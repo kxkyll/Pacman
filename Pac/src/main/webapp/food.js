@@ -1,7 +1,7 @@
 function Food (x,y,context){
     this.x=x;
     this.y=y;
-    this.r=5;
+    this.r=6;
     this.context=context;
 }
 
@@ -30,6 +30,7 @@ createFood = function(path,context){
             }
         }
     }
+    console.log("foods created: "+foods.length);
     return foods;
 }
 drawFoods = function(foods,context){
