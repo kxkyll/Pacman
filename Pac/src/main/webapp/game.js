@@ -20,11 +20,12 @@ var pacmanGame ={
     orangeGhost:null,
     pinkGhost:null,
     deadGhost:null,
-    food:null,
+    //food:null,
     foodTable:null,
     path:null,
     navi:null,
     gameOver: null,
+    
     
     init: function(){
         //console.log("init");
@@ -81,7 +82,12 @@ var pacmanGame ={
         pacmanGame.pinkGhost.draw(pacmanGame.ctx);
         
         pacmanGame.readGhost.draw(pacmanGame.ctx);
-
+        pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+        pacmanGame.ctx.fillRect(0,440,640,40);
+        
+        pacmanGame.ctx.font="12pt Calibri";
+        pacmanGame.ctx.fillStyle="rgb(255,255,255)";
+        pacmanGame.ctx.fillText("Score :         " +pacmanGame.man.getPoints() ,220,460);  
 
     },
     run: function(){

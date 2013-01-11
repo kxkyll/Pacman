@@ -9,11 +9,8 @@ Food.prototype.draw = function(){
     this.context.fillStyle="white";
     this.context.beginPath();
     this.context.arc(this.x, this.y, this.r, 0, 2* Math.PI, false);
-    //this.context.fillStyle=this.colour;
     this.context.fill();
-//    this.context.lineWidth =2;
-//    this.context.strokeStyle = '#003300';
-//    this.context.stroke();
+
 }
 
 createFood = function(path,context){
@@ -23,14 +20,12 @@ createFood = function(path,context){
         
         for (var j = 0; j < 641; j+=40) {
             if (path[i][j] == true){
-                //console.log("ruokaa: "+i +" "+j);
                 foods[foodCount] = new Food(j+20,i+20,context);
                 foods[foodCount].draw();            
                 foodCount++;
             }
         }
     }
-    console.log("foods created: "+foods.length);
     return foods;
 }
 drawFoods = function(foods,context){

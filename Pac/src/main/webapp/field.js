@@ -18,9 +18,6 @@ function createNavi(){
         }
     }
     
-    //mark the possible pathways with true
-    // todo: try to get this nicer by using context.getImageData to figure out the
-    // path by reading the color from the canvas
     
     // row 1
     for (var x1 = 45; x1 < 561; x1++){
@@ -229,7 +226,8 @@ function createPath(){
     
     //mark the possible pathways with true
     // todo: try to get this nicer by using context.getImageData to figure out the
-    // path by reading the color from the canvas
+    // path by reading the color from the canvas 
+    // -> requires server to be started due to security constraints
     
     // row 1
     for (var x1 = 40; x1 < 561; x1++){
@@ -376,13 +374,13 @@ function createPath(){
     }
     //vertical row between 9 and 10
     
-    for (var y9 = 120; y9 < 241; y9++){
+    for (var y93 = 120; y9 < 241; y9++){
         fieldPath[y9][370] = true;
     }
-    for (var y9 = 120; y9 < 241; y9++){
+    for (var y94 = 120; y9 < 241; y9++){
         fieldPath[y9][380] = true;
     }
-    for (var y9 = 120; y9 < 241; y9++){
+    for (var y95 = 120; y9 < 241; y9++){
         fieldPath[y9][390] = true;
     }
     

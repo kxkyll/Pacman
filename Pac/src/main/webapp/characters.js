@@ -26,6 +26,7 @@ function Pacman (x,y, context){
     this.y=y;
     this.context = context;
     this.animation = new Animation ($("#pacsprite")[0],0,37,37);
+    this.points = 0;
 }
 
 Pacman.prototype.getX = function(){
@@ -34,6 +35,11 @@ Pacman.prototype.getX = function(){
 Pacman.prototype.getY = function(){
     return this.y;
 }
+Pacman.prototype.getPoints = function(){
+    return this.points;
+}
+
+
 
 Pacman.prototype.clear = function(){
     //this.context.clearRect(this.x,this.y,40,36);
@@ -115,6 +121,7 @@ Pacman.prototype.eat = function (foods) {
     }
     if (remove != null){
         foods.splice(remove,1);
+        this.points += 20;
     }
     
     
