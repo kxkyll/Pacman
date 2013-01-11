@@ -78,10 +78,9 @@ Pacman.prototype.move = function(movement,path,foods){
         this.animation.setDirection(pacmanDirection.RIGHT);
     }
     if (movement[0] == 0 && movement[1] == 0){ // pacman has not moved
-        console.log("pacman not moving");
-    
+        //console.log("pacman not moving");    
     }else{
-        console.log("pacman has moved, go eat");
+        //console.log("pacman has moved, go eat");
         foods = this.eat(foods);
     }
     return foods;
@@ -107,26 +106,15 @@ Pacman.prototype.collision = function (ghost) {
 Pacman.prototype.eat = function (foods) {
     var remove = null;
     for (var i = 0; i< foods.length;i++){
-        var x = Math.abs(this.x - foods[i].x);
-        //console.log("x: "+x +" foods x: "+foods[i].x);
-        var y = Math.abs(this.y - foods[i].y);
-        //console.log("y: "+y+" foods y: "+foods[i].y);
-        var dist = Math.sqrt(x*x+y*y);
-        //console.log("dist: "+dist);
-        if (dist <= 28.5) {
-            console.log("foods now: " +foods.length);
-            console.log("pacman: " +this.x +" " +this.y);
-            console.log("YAM YAM");
-            console.log("foods: "+foods[i].x +" "+foods[i].y);
+        var x = Math.abs((this.x+20) - foods[i].x);
+        var y = Math.abs((this.y+20) - foods[i].y);       
+        var dist = Math.sqrt(x*x+y*y);       
+        if (dist <= 10) {
             remove = i;
-        }    
-        
+        }            
     }
     if (remove != null){
-        console.log("foods: "+foods[remove].x +" "+foods[remove].y);
-        console.log("remove: "+remove);
         foods.splice(remove,1);
-        console.log("foods left: " +foods.length);
     }
     
     

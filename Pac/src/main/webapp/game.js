@@ -100,6 +100,7 @@ var pacmanGame ={
        
         //pacmanGame.foodTable=pacmanGame.man.eat(pacmanGame.foodTable);
         if (pacmanGame.foodTable.length == 0){
+            pacmanGame.render();
             pacmanGame.gameOver = true;
             pacmanGame.end();
         }
