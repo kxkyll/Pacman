@@ -91,14 +91,14 @@ var pacmanGame ={
         }
         //pacmanGame.blueGhost.ramble(pacmanGame.path);
         //pacmanGame.blueGhost.navi(pacmanGame.navi);
-        pacmanGame.man.move(keyhandler.getMovement(), pacmanGame.path);
+        pacmanGame.foodTable= pacmanGame.man.move(keyhandler.getMovement(), pacmanGame.path, pacmanGame.foodTable);
         
         if (pacmanGame.man.collision(pacmanGame.readGhost)){
             pacmanGame.gameOver = true;
             pacmanGame.end();
         }
-        //testi
-        pacmanGame.foodTable=pacmanGame.man.eat(pacmanGame.foodTable);
+       
+        //pacmanGame.foodTable=pacmanGame.man.eat(pacmanGame.foodTable);
         if (pacmanGame.foodTable.length == 0){
             pacmanGame.gameOver = true;
             pacmanGame.end();

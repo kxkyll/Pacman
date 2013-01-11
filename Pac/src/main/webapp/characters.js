@@ -42,16 +42,18 @@ Pacman.prototype.clear = function(){
     this.context.fillRect(this.x,this.y, 38,38);
 }
 
-Pacman.prototype.move = function(movement,path){
+Pacman.prototype.move = function(movement,path,foods){
     this.clear();
     var step = 10;
     var newx = this.x + (movement[0] * step);
     var newy = this.y + (movement[1] * step);
+    //var foodsleft =new Array();
+    //foodsleft = foods;
     //    console.log("newx: "+newx +" newy "+newy);
     //    console.log("path: "+path[newy][newx]);
     if (!path[newy][newx]){
         //console.log ("Wrong direction");
-        return;
+        return foods;
     }
     this.x += (movement[0] * step);
     this.y += (movement[1] * step);
@@ -75,6 +77,14 @@ Pacman.prototype.move = function(movement,path){
         //console.log("right");
         this.animation.setDirection(pacmanDirection.RIGHT);
     }
+    if (movement[0] == 0 && movement[1] == 0){ // pacman has not moved
+        console.log("pacman not moving");
+    
+    }else{
+        console.log("pacman has moved, go eat");
+        foods = this.eat(foods);
+    }
+    return foods;
     
 }
 
@@ -98,19 +108,25 @@ Pacman.prototype.eat = function (foods) {
     var remove = null;
     for (var i = 0; i< foods.length;i++){
         var x = Math.abs(this.x - foods[i].x);
-            //console.log("x: "+x +" foods x: "+foods[i].x);
+        //console.log("x: "+x +" foods x: "+foods[i].x);
         var y = Math.abs(this.y - foods[i].y);
-            //console.log("y: "+y+" foods y: "+foods[i].y);
+        //console.log("y: "+y+" foods y: "+foods[i].y);
         var dist = Math.sqrt(x*x+y*y);
-            //console.log("dist: "+dist);
-        if (dist <= 29) {
+        //console.log("dist: "+dist);
+        if (dist <= 28.5) {
+            console.log("foods now: " +foods.length);
+            console.log("pacman: " +this.x +" " +this.y);
             console.log("YAM YAM");
+            console.log("foods: "+foods[i].x +" "+foods[i].y);
             remove = i;
         }    
         
     }
     if (remove != null){
+        console.log("foods: "+foods[remove].x +" "+foods[remove].y);
+        console.log("remove: "+remove);
         foods.splice(remove,1);
+        console.log("foods left: " +foods.length);
     }
     
     
