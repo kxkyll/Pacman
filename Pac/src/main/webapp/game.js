@@ -25,6 +25,7 @@ var pacmanGame ={
     path:null,
     navi:null,
     gameOver: null,
+    paused:false,
     
     
     init: function(){
@@ -33,8 +34,7 @@ var pacmanGame ={
         pacmanGame.man = new Pacman (200, 40, pacmanGame.ctx); 
         
         pacmanGame.readGhost = new Ghost (400, 200, pacmanGame.ctx, $("#ghostsprite")[0]);
-        //pacmanGame.blueGhost = new Ghost (360, 200, pacmanGame.ctx, $("#ghostspriteInky")[0]);
-        pacmanGame.blueGhost = new Ghost (120, 40, pacmanGame.ctx, $("#ghostspriteInky")[0]);
+        pacmanGame.blueGhost = new Ghost (360, 200, pacmanGame.ctx, $("#ghostspriteInky")[0]);
         pacmanGame.orangeGhost = new Ghost (360, 240, pacmanGame.ctx, $("#ghostspriteOrange")[0]);
         pacmanGame.pinkGhost = new Ghost (400, 240, pacmanGame.ctx, $("#ghostspritePink")[0]);
         pacmanGame.deadGhost = new Ghost (200, 40, pacmanGame.ctx, $("#ghostspriteDead")[0]);
@@ -50,25 +50,16 @@ var pacmanGame ={
         pacmanGame.ctx.clearRect(0,0,640,480);
 
         pacmanGame.ctx.fillStyle="rgb(195,195,195)";
-        // fillRect parameters x,y, width, height
+
         pacmanGame.ctx.fillRect(0,0, 640,480);
-        //pacmanGame.field.draw();
+
         drawField(pacmanGame.ctx);
         
-    pacmanGame.foodTable = createFood(pacmanGame.path,pacmanGame.ctx);
-
-        
-    //pacmanGame.path = createPath();
-        
-        
-    //        pacmanGame.man.animate();
-    //        pacmanGame.man.draw(pacmanGame.ctx);
-    //        pacmanGame.ghost.animate(); 
-    //        pacmanGame.ghost.draw(pacmanGame.ctx);
-        
+        pacmanGame.foodTable = createFood(pacmanGame.path,pacmanGame.ctx);
+            
     },
     render: function(){
-        //pacmanGame.food.draw();
+
         drawFoods(pacmanGame.foodTable,pacmanGame.ctx);
         pacmanGame.man.animate();
         pacmanGame.man.draw(pacmanGame.ctx);
@@ -82,73 +73,105 @@ var pacmanGame ={
         pacmanGame.pinkGhost.draw(pacmanGame.ctx);
         
         pacmanGame.readGhost.draw(pacmanGame.ctx);
+        
         pacmanGame.ctx.fillStyle="rgb(25,25,112)";
         pacmanGame.ctx.fillRect(0,440,640,40);
         
-        pacmanGame.ctx.font="12pt Calibri";
+        pacmanGame.ctx.font="15pt Calibri";
         pacmanGame.ctx.fillStyle="rgb(255,255,255)";
-        pacmanGame.ctx.fillText("Score :         " +pacmanGame.man.getPoints() ,220,460);  
+        pacmanGame.ctx.fillText("Score: " +pacmanGame.man.getPoints() ,240,460);  
 
     },
     run: function(){
-        //console.log("run");
+
         if (pacmanGame.gameOver){
             pacmanGame.end();
         }
-        //pacmanGame.blueGhost.ramble(pacmanGame.path);
-        //pacmanGame.blueGhost.navi(pacmanGame.navi);
+        pacmanGame.blueGhost.ramble(pacmanGame.path);
+
         pacmanGame.foodTable= pacmanGame.man.move(keyhandler.getMovement(), pacmanGame.path, pacmanGame.foodTable);
         
         if (pacmanGame.man.collision(pacmanGame.readGhost)){
             pacmanGame.gameOver = true;
             pacmanGame.end();
         }
+        //disabled for easier testing
+//        if (pacmanGame.man.collision(pacmanGame.blueGhost)){
+//            pacmanGame.gameOver = true;
+//            pacmanGame.end();
+//        }
+//        if (pacmanGame.man.collision(pacmanGame.orangeGhost)){
+//            pacmanGame.gameOver = true;
+//            pacmanGame.end();
+//        }
+//        if (pacmanGame.man.collision(pacmanGame.pinkGhost)){
+//            pacmanGame.gameOver = true;
+//            pacmanGame.end();
+//        }
        
-        //pacmanGame.foodTable=pacmanGame.man.eat(pacmanGame.foodTable);
+
         if (pacmanGame.foodTable.length == 0){
             pacmanGame.render();
             pacmanGame.gameOver = true;
             pacmanGame.end();
         }
-        //console.log("foods left: " +pacmanGame.foodTable.length);    
+        
         pacmanGame.readGhost.moveAround(pacmanGame.path);
-        //pacmanGame.greenGhost.ramble(pacmanGame.path);
+        pacmanGame.pinkGhost.ramble(pacmanGame.path);
         pacmanGame.render();
-    //pacmanGame.whiteGhost.ramble(pacmanGame.path);
-    //pacmanGame.draw();
-    //requestAnimFrame(pacmanGame.run());
+        pacmanGame.orangeGhost.ramble(pacmanGame.path);
         
     },
     end: function(){
-       
-        
-        //pacmanGame.readGhost.draw(pacmanGame.ctx);
-        //pacmanGame.man.draw(pacmanGame.ctx);
+    
         pacmanGame.ctx.font="40pt Calibri";
         pacmanGame.ctx.fillStyle="rgb(255,0,0)";
         pacmanGame.ctx.fillText("Game over",200,315);  
         if (pacmanGame.foodTable.length == 0){
             pacmanGame.ctx.fillText("Pac-man is a champ",120,355);  
+            
         }
+        pacmanGame.ctx.font="20pt Calibri";
+            pacmanGame.ctx.fillText("Mouseclick for a new game",160,30);  
     }
 };
 
 $(document).ready(function(){
-    console.log("document ready");
+    //console.log("document ready");
     pacmanGame.init();
     pacmanGame.run();
+    $(document).mouseup(function(eventInfo) {
+        if (pacmanGame.gameOver){
+            pacmanGame.gameOver=false;
+            pacmanGame.init();
+            pacmanGame.run();
+            return;
+        }
+        if (!pacmanGame.paused){
+        pacmanGame.paused= true;
+        pacmanGame.ctx.font="15pt Calibri";
+        pacmanGame.ctx.fillStyle="rgb(255,255,255)";
+        pacmanGame.ctx.fillText("Game paused" ,240,30);  
+        } else {
+           pacmanGame.paused= false;
+           pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+           pacmanGame.ctx.fillRect(0,0,640,40);
+           pacmanGame.run();
+        }
+        
+    });
     $(document).keyup(function(eventInfo) {
-        //console.log("keyup "+eventInfo.which);
+    
         keyhandler.keyup(eventInfo.which);
     });
         
     $(document).keydown(function(eventInfo) {
-        //console.log("keydown "+eventInfo.which);
+    
         keyhandler.keydown(eventInfo.which);
     });
     
     setInterval(function() {
-        if (!pacmanGame.gameOver){
+        if (!pacmanGame.gameOver && !pacmanGame.paused){
             pacmanGame.run();
         }
         
