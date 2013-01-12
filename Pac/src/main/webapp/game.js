@@ -24,8 +24,8 @@ var pacmanGame ={
     foodTable:null,
     path:null,
     navi:null,
-    gameOver: null,
-    paused:false,
+    gameOver: true,
+    paused:true,
     
     
     init: function(){
@@ -80,6 +80,9 @@ var pacmanGame ={
         pacmanGame.ctx.font="15pt Calibri";
         pacmanGame.ctx.fillStyle="rgb(255,255,255)";
         pacmanGame.ctx.fillText("Score: " +pacmanGame.man.getPoints() ,240,460);  
+        if (!pacmanGame.paused){
+            pacmanGame.ctx.fillText("Mouseclick to pause ",360,460);  
+        }
 
     },
     run: function(){
@@ -96,18 +99,18 @@ var pacmanGame ={
             pacmanGame.end();
         }
         //disabled for easier testing
-//        if (pacmanGame.man.collision(pacmanGame.blueGhost)){
-//            pacmanGame.gameOver = true;
-//            pacmanGame.end();
-//        }
-//        if (pacmanGame.man.collision(pacmanGame.orangeGhost)){
-//            pacmanGame.gameOver = true;
-//            pacmanGame.end();
-//        }
-//        if (pacmanGame.man.collision(pacmanGame.pinkGhost)){
-//            pacmanGame.gameOver = true;
-//            pacmanGame.end();
-//        }
+        //        if (pacmanGame.man.collision(pacmanGame.blueGhost)){
+        //            pacmanGame.gameOver = true;
+        //            pacmanGame.end();
+        //        }
+        //        if (pacmanGame.man.collision(pacmanGame.orangeGhost)){
+        //            pacmanGame.gameOver = true;
+        //            pacmanGame.end();
+        //        }
+        //        if (pacmanGame.man.collision(pacmanGame.pinkGhost)){
+        //            pacmanGame.gameOver = true;
+        //            pacmanGame.end();
+        //        }
        
 
         if (pacmanGame.foodTable.length == 0){
@@ -123,7 +126,7 @@ var pacmanGame ={
         
     },
     end: function(){
-    
+              
         pacmanGame.ctx.font="40pt Calibri";
         pacmanGame.ctx.fillStyle="rgb(255,0,0)";
         pacmanGame.ctx.fillText("Game over",200,315);  
@@ -132,31 +135,47 @@ var pacmanGame ={
             
         }
         pacmanGame.ctx.font="20pt Calibri";
-            pacmanGame.ctx.fillText("Mouseclick for a new game",160,30);  
+        pacmanGame.ctx.fillText("Mouseclick for a new game",160,30);  
+        
+        pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+        pacmanGame.ctx.fillRect(360,440,640,40);
     }
 };
 
 $(document).ready(function(){
     //console.log("document ready");
+    
     pacmanGame.init();
-    pacmanGame.run();
+    pacmanGame.render();
+    pacmanGame.ctx.fillStyle="rgb(255,255,255)";
+    pacmanGame.ctx.font="20pt Calibri";
+    pacmanGame.ctx.fillText("Mouseclick to start a new game",160,30);  
+    //pacmanGame.run();
     $(document).mouseup(function(eventInfo) {
+        console.log("mouseclick");
         if (pacmanGame.gameOver){
+            console.log("gameOver");
             pacmanGame.gameOver=false;
+            pacmanGame.paused=false;
             pacmanGame.init();
             pacmanGame.run();
             return;
         }
         if (!pacmanGame.paused){
-        pacmanGame.paused= true;
-        pacmanGame.ctx.font="15pt Calibri";
-        pacmanGame.ctx.fillStyle="rgb(255,255,255)";
-        pacmanGame.ctx.fillText("Game paused" ,240,30);  
+            pacmanGame.paused= true;
+            
+            pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+            pacmanGame.ctx.fillRect(360,440,640,40);
+            
+            pacmanGame.ctx.font="15pt Calibri";
+            pacmanGame.ctx.fillStyle="rgb(255,255,255)";
+            pacmanGame.ctx.fillText("Game paused" ,240,30);  
+            pacmanGame.ctx.fillText("Mouseclick to continue ",360,460);          
         } else {
-           pacmanGame.paused= false;
-           pacmanGame.ctx.fillStyle="rgb(25,25,112)";
-           pacmanGame.ctx.fillRect(0,0,640,40);
-           pacmanGame.run();
+            pacmanGame.paused= false;
+            pacmanGame.ctx.fillStyle="rgb(25,25,112)";
+            pacmanGame.ctx.fillRect(0,0,640,40);
+            pacmanGame.run();
         }
         
     });
