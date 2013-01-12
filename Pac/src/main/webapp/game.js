@@ -43,6 +43,7 @@ var pacmanGame ={
         pacmanGame.navi = createNavi();
 
         pacmanGame.draw();
+        
 
 
     },
@@ -116,6 +117,9 @@ var pacmanGame ={
         if (pacmanGame.foodTable.length == 0){
             pacmanGame.render();
             pacmanGame.gameOver = true;
+            getHighScores();
+            highScoreView.save();
+            
             pacmanGame.end();
         }
         
@@ -139,6 +143,7 @@ var pacmanGame ={
         
         pacmanGame.ctx.fillStyle="rgb(25,25,112)";
         pacmanGame.ctx.fillRect(360,440,640,40);
+        getHighScores();
     }
 };
 
