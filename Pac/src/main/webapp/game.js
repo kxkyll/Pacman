@@ -51,7 +51,6 @@ var pacmanGame ={
         pacmanGame.ctx.clearRect(0,0,640,480);
 
         pacmanGame.ctx.fillStyle="rgb(195,195,195)";
-
         pacmanGame.ctx.fillRect(0,0, 640,480);
 
         drawField(pacmanGame.ctx);
@@ -75,6 +74,7 @@ var pacmanGame ={
         
         pacmanGame.readGhost.draw(pacmanGame.ctx);
         
+        //re-draw the lower blue bar so that score text is shown correctly
         pacmanGame.ctx.fillStyle="rgb(25,25,112)";
         pacmanGame.ctx.fillRect(0,440,640,40);
         
@@ -88,10 +88,10 @@ var pacmanGame ={
     },
     run: function(){
 
-        if (pacmanGame.gameOver){
-            
+        if (pacmanGame.gameOver){            
             pacmanGame.end();
         }
+        
         pacmanGame.blueGhost.ramble(pacmanGame.path);
 
         pacmanGame.foodTable= pacmanGame.man.move(keyhandler.getMovement(), pacmanGame.path, pacmanGame.foodTable);
@@ -155,12 +155,13 @@ $(document).ready(function(){
     pacmanGame.ctx.fillStyle="rgb(255,255,255)";
     pacmanGame.ctx.font="20pt Calibri";
     pacmanGame.ctx.fillText("Mouseclick to start a new game",160,30);  
+    $("#info").append('<p>Move with arrows, up, down, right, left </p>');
     //getHighScores();
     //pacmanGame.run();
     $(document).mouseup(function(eventInfo) {
-        console.log("mouseclick");
+        //console.log("mouseclick");
         if (pacmanGame.gameOver){
-            console.log("gameOver");
+            //console.log("gameOver");
             pacmanGame.gameOver=false;
             pacmanGame.paused=false;
             getHighScores();

@@ -10,36 +10,24 @@ highscore.view.View = Backbone.View.extend({
       
     el: $("body"),
     initialize: function(){
-        console.log("highscore initialize");
-        //        var html = " ";
-        //        $("body").html(html);
+        //console.log("highscore initialize");
         
-        //$("#highscore").append('<h2>Highscores!</h2>');
-        
-        
-    //        $("#navi").append('<nav id ="navigation"></nav>');
-    //        $("#navigation").append('<ol id ="menu"></ol>');
-    //        $("#menu").append('<li><a href="#">Add game</a></li>');
-    //        $("#menu").append('<li><a href="#">List games</a></li>');
-       
     },
     events: {
-    //"click a:nth(0)": "add",
-    //"click a:nth(1)": "render", 
-    // "click #addGame": "save"
+   
     },
     render: function(){
-        console.log("highscore render");
+        //console.log("highscore render");
         //$("#highscore").append('<h2>Highscores!</h2>');
         var data = {
             "list": this.model.toJSON()
             
         };
-         //"list": this.model.toJSON()
-        for (var i= 0; i < data.list.length; i++){
-                console.log(data.list[i].id);
-                console.log(data.list[i].score);
-            }
+         
+//        for (var i= 0; i < data.list.length; i++){
+//                console.log(data.list[i].id);
+//                console.log(data.list[i].score);
+//            }
         var html = Mustache.render($("#gameHighScoreTemplate").html(),data);
         $("#highscore").html(html);
         
@@ -60,15 +48,15 @@ highscore.view.View = Backbone.View.extend({
     },
     
     save: function() {
-        console.log("save");
+        //console.log("save");
         var data = this.serialize();
       
         try {
-            console.log("save modelissa nyt: "+this.model.toJSON());
+            //console.log("save modelissa nyt: "+this.model.toJSON());
             //this.model.reset();
             this.model.add(data);
             
-            console.log("lisäyksen jälkeen: "+this.model.toJSON());
+            //console.log("lisäyksen jälkeen: "+this.model.toJSON());
             
             
         } catch (err) {
@@ -97,7 +85,7 @@ highscore.model.HighScoreList = Backbone.Collection.extend({
 });
 
 function getHighScores(){
-    console.log("getHighScores");
+    //console.log("getHighScores");
     var highScoreCollection = new highscore.model.HighScoreList();
     highScoreCollection.fetch({
         add:true,

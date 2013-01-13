@@ -4,7 +4,11 @@ function Node (){
     this.up = false;
     this.down = false;
 }
+
 function createNavi(){
+    //todo: create navigation info so that all possible directions can be used
+    //when chosts are deciding a path to go
+    
     //create array
     var fieldNavi = new Array(2);
     //make array two dimensional
