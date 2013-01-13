@@ -1,4 +1,5 @@
 //"use strict";
+var highScoreView;
 
 var highscore = {
     model: {},
@@ -12,7 +13,10 @@ highscore.view.View = Backbone.View.extend({
         console.log("highscore initialize");
         //        var html = " ";
         //        $("body").html(html);
-        $("#highscore").append('<h2>Highscores!</h2>');
+        
+        //$("#highscore").append('<h2>Highscores!</h2>');
+        
+        
     //        $("#navi").append('<nav id ="navigation"></nav>');
     //        $("#navigation").append('<ol id ="menu"></ol>');
     //        $("#menu").append('<li><a href="#">Add game</a></li>');
@@ -25,13 +29,18 @@ highscore.view.View = Backbone.View.extend({
     // "click #addGame": "save"
     },
     render: function(){
-            console.log("highscore render");
-        
+        console.log("highscore render");
+        //$("#highscore").append('<h2>Highscores!</h2>');
         var data = {
             "list": this.model.toJSON()
             
         };
-        var html = Mustache.render($("#highscoreTemplate").html(), data);
+         //"list": this.model.toJSON()
+        for (var i= 0; i < data.list.length; i++){
+                console.log(data.list[i].id);
+                console.log(data.list[i].score);
+            }
+        var html = Mustache.render($("#gameHighScoreTemplate").html(),data);
         $("#highscore").html(html);
         
     },
@@ -56,7 +65,7 @@ highscore.view.View = Backbone.View.extend({
       
         try {
             console.log("save modelissa nyt: "+this.model.toJSON());
-            this.model.reset();
+            //this.model.reset();
             this.model.add(data);
             
             console.log("lisäyksen jälkeen: "+this.model.toJSON());
@@ -66,22 +75,24 @@ highscore.view.View = Backbone.View.extend({
             alert(err);
             return;
         }
+        this.render();
     }
+    
 });
 
 
 highscore.model.HighScore = Backbone.Model.extend({
-    defaults: {
-        "score":"0000"
-               
-    },
+//    defaults: {
+//        "score":"0"
+//               
+//    },
     initialize: function(){
         this.save();
     } 
 });
 
 highscore.model.HighScoreList = Backbone.Collection.extend({
-    url: "http://aqueous-ravine-5531.herokuapp.com/app/games/7/scores/",
+    url: "http://aqueous-ravine-5531.herokuapp.com/app/games/797/scores/",
     model: highscore.model.HighScore 
 });
 
@@ -91,41 +102,15 @@ function getHighScores(){
     highScoreCollection.fetch({
         add:true,
         success: function() {
-            console.log("success: "+highScoreCollection.toJSON());
-            var highScoreView = new highscore.view.View({
+            highScoreView = new highscore.view.View({
                 model:highScoreCollection
             });
-            highScoreView.save();
+            //highScoreView.save();
             highScoreView.render();
-            
         }
-        
-        
-});
+    });
 }
 
 
-
-
-
-//$(document).ready(function(){
-//    var highScoreCollection = new highscore.model.HighScoreList();
-//    highScoreCollection.fetch({
-//        add:true,
-//        success: function() {
-//            //console.log("success: "+gameCollection);
-//            var highScoreView = new highscore.view.View({
-//                model:highScoreCollection
-//            });
-//        }
-//    });
-
-    
-//    gameCollection.each( function( obj ){
-//        console.log(obj);
-//    } );
-    
-
-    
 //})
 //[{"id":14,"score":360,"game":{"id":7,"name":"pacman"}},{"id":15,"score":1000,"game":{"id":7,"name":"pacman"}}]

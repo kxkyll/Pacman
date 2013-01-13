@@ -5,6 +5,9 @@
     Description:
         Purpose of the stylesheet follows.
 */
+body{
+    background-color: rgb(195,195,195);
+}
 
 root { 
     display: block;
@@ -12,9 +15,9 @@ root {
 .hidden {
     display: none;
 }
-table {
+#highscore {
     position:absolute;
-    left:655px;
-    top: 50px;
+    left:680px;
+    top: 85px;
 }
 

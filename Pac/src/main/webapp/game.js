@@ -89,6 +89,7 @@ var pacmanGame ={
     run: function(){
 
         if (pacmanGame.gameOver){
+            
             pacmanGame.end();
         }
         pacmanGame.blueGhost.ramble(pacmanGame.path);
@@ -99,27 +100,24 @@ var pacmanGame ={
             pacmanGame.gameOver = true;
             pacmanGame.end();
         }
-        //disabled for easier testing
-        //        if (pacmanGame.man.collision(pacmanGame.blueGhost)){
-        //            pacmanGame.gameOver = true;
-        //            pacmanGame.end();
-        //        }
-        //        if (pacmanGame.man.collision(pacmanGame.orangeGhost)){
-        //            pacmanGame.gameOver = true;
-        //            pacmanGame.end();
-        //        }
-        //        if (pacmanGame.man.collision(pacmanGame.pinkGhost)){
-        //            pacmanGame.gameOver = true;
-        //            pacmanGame.end();
-        //        }
+        
+        if (pacmanGame.man.collision(pacmanGame.blueGhost)){
+            pacmanGame.gameOver = true;
+            pacmanGame.end();
+        }
+        if (pacmanGame.man.collision(pacmanGame.orangeGhost)){
+            pacmanGame.gameOver = true;
+            pacmanGame.end();
+        }
+        if (pacmanGame.man.collision(pacmanGame.pinkGhost)){
+            pacmanGame.gameOver = true;
+            pacmanGame.end();
+        }
        
 
         if (pacmanGame.foodTable.length == 0){
             pacmanGame.render();
             pacmanGame.gameOver = true;
-            getHighScores();
-            highScoreView.save();
-            
             pacmanGame.end();
         }
         
@@ -134,16 +132,18 @@ var pacmanGame ={
         pacmanGame.ctx.font="40pt Calibri";
         pacmanGame.ctx.fillStyle="rgb(255,0,0)";
         pacmanGame.ctx.fillText("Game over",200,315);  
+        
         if (pacmanGame.foodTable.length == 0){
             pacmanGame.ctx.fillText("Pac-man is a champ",120,355);  
-            
+            highScoreView.save();
+          
         }
         pacmanGame.ctx.font="20pt Calibri";
         pacmanGame.ctx.fillText("Mouseclick for a new game",160,30);  
         
         pacmanGame.ctx.fillStyle="rgb(25,25,112)";
         pacmanGame.ctx.fillRect(360,440,640,40);
-        getHighScores();
+        
     }
 };
 
@@ -155,6 +155,7 @@ $(document).ready(function(){
     pacmanGame.ctx.fillStyle="rgb(255,255,255)";
     pacmanGame.ctx.font="20pt Calibri";
     pacmanGame.ctx.fillText("Mouseclick to start a new game",160,30);  
+    //getHighScores();
     //pacmanGame.run();
     $(document).mouseup(function(eventInfo) {
         console.log("mouseclick");
@@ -162,6 +163,7 @@ $(document).ready(function(){
             console.log("gameOver");
             pacmanGame.gameOver=false;
             pacmanGame.paused=false;
+            getHighScores();
             pacmanGame.init();
             pacmanGame.run();
             return;
